@@ -1,0 +1,37 @@
+Type: Package
+Package: konigsbergr
+Title: Find Paths Through Bridges On A Map
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Matthew",
+           family = "Lincoln",
+           role = c("aut", "cre"),
+           email = "mlincoln@andrew.cmu.edu",
+           comment = c(ORCID = "0000-0002-4387-3384"))
+Description: A playful attempt to recreate Euler's "Bridges of
+    Königsberg" problem, finding a path that crosses all the bridges in a
+    city while trying to cross each bridge only once.
+License: MIT + file LICENSE
+URL: https://github.com/dSHARP-CMU/konigsbergr
+BugReports: https://github.com/dSHARP-CMU/konigsbergr/issues
+Depends: 
+    igraph,
+    R (>= 3.0.1)
+Imports: 
+    assertthat,
+    glue,
+    purrr,
+    tibble,
+    tidygraph
+Suggests: 
+    covr,
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1

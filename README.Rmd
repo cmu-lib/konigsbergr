@@ -1,0 +1,29 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# pathfinder
+
+The goal of konigsbergr is to recreate the "Bridges of Königsberg" problem over any city by converting data from OpenStreetMap into a graph and traversing it.
+
+## Installation
+
+You can install the development version:
+
+```{r, eval = FALSE}
+devtools::install_github("dSHARP-CMU/konigsbergr")
+```
+
+## Usage
+
