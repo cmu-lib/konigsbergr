@@ -25,7 +25,11 @@ Imports:
     purrr,
     sf,
     tibble,
-    tidygraph
+    tidygraph,
+    httr,
+    geosphere,
+    dplyr,
+    tidyr
 Suggests: 
     covr,
     knitr,
