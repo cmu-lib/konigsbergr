@@ -20,7 +20,10 @@ Depends:
 Imports: 
     assertthat,
     glue,
+    osmar,
+    pathfinder (>= 0.0.0.9000),
     purrr,
+    sf,
     tibble,
     tidygraph
 Suggests: 
@@ -30,6 +33,8 @@ Suggests:
     testthat
 VignetteBuilder: 
     knitr
+Remotes: 
+    dsharp-cmu/pathfinder
 Encoding: UTF-8
 Language: en-US
 LazyData: true
