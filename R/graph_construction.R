@@ -6,6 +6,14 @@ remove_unreachable_nodes <- function(graph) {
     filter(!(node_is_isolated()))
 }
 
+# Keep only the biggest connected component of a graph
+select_main_component <- function(graph) {
+  graph %>%
+    activate(nodes) %>%
+    mutate(component = group_components()) %>%
+    filter(component == 1)
+}
+
 # Weights by carteisan distance of from and to nodes
 # the "conversion" factor is
 weight_by_distance <- function(graph) {
@@ -14,20 +22,6 @@ weight_by_distance <- function(graph) {
     mutate(distance = geosphere::distGeo(
       p1 = cbind(.N()$lon[from], .N()$lat[from]),
       p2 = cbind(.N()$lon[to], .N()$lat[to])))
-}
-
-# Match UIDs for nodes even after a graph has been modified and the node index
-# in a given graph has changed.
-node_number <- function(graph, name) {
-  match(name, as_tibble(graph, active = "nodes")[["name"]])
-}
-
-# Keep only the biggest connected component of a graph
-select_main_component <- function(graph) {
-  graph %>%
-    activate(nodes) %>%
-    mutate(component = group_components()) %>%
-    filter(component == 1)
 }
 
 # Identifying bridges ----
