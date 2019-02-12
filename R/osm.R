@@ -21,6 +21,11 @@ get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.
   osm_res <- osmar::get_osm(osmar::complete_file(), source = osmar::osmsource_file(tfile))
   message("complete!")
 
+  assertthat::assert_that(dim(osm_res)[1] > 0, msg = "There are no nodes in the downloaded OSM. Check that you have supplied a valid bounding box.")
+  assertthat::assert_that(dim(osm_res)[2] > 0, msg = "There are no ways in the downloaded OSM. Check that you have supplied a valid bounding box.")
+
+  message(glue::glue("Downloaded an OSM extract with {dim(osm_res)[1]} nodes and {dim(osm_res)[2]} ways."))
+
   unlink(tfile)
 
   osm_res

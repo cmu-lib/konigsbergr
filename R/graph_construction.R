@@ -22,13 +22,13 @@ get_kongisberger_nodes <- function(src) {
 }
 
 # Extract a table of OSM Ways bearing ids, labels, and selected tag values
-#' @import dplyr tidy
+#' @import dplyr tidyr
 get_kongisberger_ways <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   way_tags <- src$ways$tags %>%
     as_tibble() %>%
-    filter(k %in% osm_edge_tag_keys()) %>%
+    filter(k %in% c(osm_edge_tag_keys(), "name")) %>%
     mutate_at(vars(v), as.character) %>%
     spread(k, v, drop = TRUE) %>%
     # To avoid collision with the "name" id used by igraph/tidygraph, use the

@@ -1,9 +1,6 @@
 # Define which OSM metadata key-value pairs are relevant
 
-osm_edge_tag_keys <- function() c("name", "access", "highway", "bicycle", "foot", "path", "bridge", "oneway")
-
-excluded_highways <- function() c("pedestrian", "footway", "cycleway", "steps", "track", "elevator", "bus_stop", "construction", "no", "escape", "proposed", "raceway", "services", "path")
-
+osm_edge_tag_keys <- function() c("access", "highway", "bicycle", "foot", "bridge", "oneway")
 
 #' OSM Way filters
 #'
@@ -14,11 +11,11 @@ excluded_highways <- function() c("pedestrian", "footway", "cycleway", "steps", 
 #' @return An integer vector of OSM Way ids.
 #'
 #' @import dplyr
-#' @export
-#' @rdname way_filters
+#' @name way_filters
 NULL
 
 #' @describeIn way_filters Ways that are navigable in an automobile
+#' @export
 automobile_highways <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
@@ -43,6 +40,7 @@ automobile_highways <- function(graph) {
 }
 
 #' @describeIn way_filters Ways that are navigable by foot
+#' @export
 pedestrian_highways <- function(graph) {
 
   stopifnot(inherits(graph, "konigsberg_graph"))
@@ -62,11 +60,11 @@ pedestrian_highways <- function(graph) {
 #' @inheritParams way_filters
 #'
 #' @import dplyr
-#' @export
-#' @rdname bridge_filters
+#' @name bridge_filters
 NULL
 
 #' @describeIn bridge_filters Include all OSM bridges
+#' @export
 all_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
@@ -80,6 +78,7 @@ all_bridges <- function(graph) {
 }
 
 #' @describeIn bridge_filters Only use major bridges, excluding any on/off ramps
+#' @export
 main_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
