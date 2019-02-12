@@ -1,39 +1,16 @@
-# Graph utilities ----
+# Constructing a road/bridge graph from an osmar object ----
 
-remove_unreachable_nodes <- function(graph) {
-  graph %>%
-    activate(nodes) %>%
-    filter(!(node_is_isolated()))
-}
-
-# Keep only the biggest connected component of a graph
-select_main_component <- function(graph) {
-  graph %>%
-    activate(nodes) %>%
-    mutate(component = group_components()) %>%
-    filter(component == 1)
-}
-
-# Weights by carteisan distance of from and to nodes
-# the "conversion" factor is
-weight_by_distance <- function(graph) {
-  graph %>%
-    activate(edges) %>%
-    mutate(distance = geosphere::distGeo(
-      p1 = cbind(.N()$lon[from], .N()$lat[from]),
-      p2 = cbind(.N()$lon[to], .N()$lat[to])))
-}
-
-# Identifying bridges ----
-
-osm_node_attributes <- function(src) {
-  node_keys <- c("name")
+# Extract a table of OSM nodes bearing IDs, lat, lon, and label
+get_kongisberger_nodes <- function(src) {
+  stopifnot(inherits(src, "osmar"))
 
   base_attrs <- src$nodes$attrs %>%
-    select(id, lat, lon)
+    select(id, lat, lon) %>%
+    as_tibble()
 
   node_tags <- src$nodes$tags %>%
-    filter(k %in% node_keys) %>%
+    as_tibble() %>%
+    filter(k == "name") %>%
     mutate_at(vars(v), as.character) %>%
     spread(k, v, drop = TRUE) %>%
     # To avoid collision with the "name" id used by igraph/tidygraph, use the
@@ -41,72 +18,75 @@ osm_node_attributes <- function(src) {
     rename(label = name)
 
   base_attrs %>%
-    left_join(node_tags, by = "id") %>%
-    mutate_at(vars(id), as.character)
+    left_join(node_tags, by = "id")
 }
 
-osm_edge_attributes <- function(src) {
-  # Pull basic way tags
-
-  edge_keys <- c("name", "access", "highway", "bridge", "bridge_name", "oneway")
+# Extract a table of OSM Ways bearing ids, labels, and selected tag values
+#' @import dplyr tidy
+get_kongisberger_ways <- function(src) {
+  stopifnot(inherits(src, "osmar"))
 
   way_tags <- src$ways$tags %>%
-    filter(k %in% edge_keys) %>%
+    as_tibble() %>%
+    filter(k %in% osm_edge_tag_keys()) %>%
     mutate_at(vars(v), as.character) %>%
     spread(k, v, drop = TRUE) %>%
     # To avoid collision with the "name" id used by igraph/tidygraph, use the
-    # term "label" for OSM name
+    # term "label" for OSM feature name
     rename(label = name)
 
+  # Collect parent bridge relations
+  relation_tags <- src$relations$tags %>%
+    as_tibble() %>%
+    filter(k == "type", v == "bridge") %>%
+    left_join(src$relations$refs, by = "id") %>%
+    filter(type == "way") %>%
+    select(id = ref, bridge_relation = id) %>%
+    distinct(id, .keep_all = TRUE)
+
   way_tags %>%
-    mutate_at(vars(id), as.character)
+    left_join(relation_tags, by = "id")
 }
 
-# Only keep those nodes in the graph that are within a specified bounding box
-filter_to_limits <- function(graph, limits) {
-  graph %>%
+#' Create a road and bridge network from OSM data
+#'
+#' Creates a base graph object with the appropriate edge and vertex attributes from OSM.
+to_konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filter = all_bridges) {
+  k_graph <- create_base_konigsberg_graph(src)
+
+  message("Filtering graph to desired paths and bridges...", appendLF = FALSE)
+  marked_graph <- graph %>%
+    path_filter() %>%
+    bridge_filter() %>%
+    mark_bridges() %>%
+    weight_by_distance() %>%
+    reciprocal_two_way_streets()
+  message("complete!")
+
+  marked_graph
+}
+
+create_base_konigsberg_graph <- function(graph) {
+  stopifnot(inherits(src, "osmar"))
+
+  message("Creating base graph...", appendLF = FALSE)
+  base_graph <- as_igraph(src)
+  message("complete!")
+
+  message("Creating base graph...", appendLF = FALSE)
+  graph <- as_tbl_graph(base_graph, directed = TRUE) %>%
     activate(nodes) %>%
-    filter(
-      between(lon, left = limits$xlim[1], right = limits$xlim[2]),
-      between(lat, left = limits$ylim[1], right = limits$ylim[2]))
-}
-
-# Only keep edges that contain at least one node within the spedified set
-filter_to_nodes <- function(graph, node_ids) {
-  node_indices <- node_number(graph, node_ids) %>% na.omit()
-
-  graph %>%
+    rename(id = name) %>%
+    mutate_at(vars(id), as.numeric) %>%
+    left_join(get_kongisberger_nodes(src), by = "id") %>%
     activate(edges) %>%
-    filter(from %in% node_indices | to %in% node_indices) %>%
-    remove_unreachable_nodes()
-}
+    rename(id = name) %>%
+    select(-weight) %>%
+    left_join(get_kongisberger_ways(src), by = "id") %>%
+    select_main_component()
+  message("complete!")
 
-# Keep all edges and nodes, but only mark bridges that are within node boundaries
-filter_bridges_to_nodes <- function(graph, node_ids) {
-  node_indices <- node_number(graph, node_ids) %>% na.omit()
-
-  graph %>%
-    activate(edges) %>%
-    mutate(
-      within_boundaries = from %in% node_indices | to %in% node_indices,
-      is_bridge = if_else(within_boundaries, is_bridge, FALSE),
-      bridge_id = if_else(within_boundaries, bridge_id, NA_character_)
-    )
-}
-
-
-# Filter edges down to the desired paths based on OSM tags (e.g. no sidewalks,
-# no private roads, etc). This is for removing edges entirely from the network,
-# not to be confused with mark_required_edges() which only makrs those that will
-# eventually be required to be crossed during pathfinding.
-filter_to_allowed_paths <- function(graph, excluded_highways) {
-
-  graph %>%
-    activate(edges) %>%
-    filter(
-      (is.na(access) | access != "no") &
-        (!is.na(highway) & !(highway %in% excluded_highways))
-    )
+  class(graph) <- c(class(graph), "konigsberg_graph")
 }
 
 collect_edge_bundles <- function(graph) {
@@ -116,75 +96,50 @@ collect_edge_bundles <- function(graph) {
 
   unique_relation_ids <- unique(na.omit(all_bridge_ids))
 
-  map(unique_relation_ids, ~ which(.x == all_bridge_ids))
+  lapply(unique_relation_ids, function(x) which(x == all_bridge_ids))
 }
 
-# For those edges that have earlier been marked as bridges, designate which are required
-mark_bridges <- function(graph, allowed_bridge_attributes) {
+# Graph utilities ----
 
-  graph %>%
-    activate(edges) %>%
-    mutate(
-      is_bridge = case_when(
-        bridge == "yes" & highway %in% allowed_bridge_attributes ~ TRUE,
-        # When in doubt, it's not a bridge
-        TRUE ~ FALSE),
-      bridge_id = case_when(
-        is_bridge & !is.na(bridge_relation) ~ bridge_relation,
-        is_bridge ~ name,
-        TRUE ~ NA_character_
-      )
-    )
-}
+# Add reverse edges of non-one-way streets
+reciprocal_two_way_streets <- function(graph) {
+  stopifnot(inherits(graph, "konigsberg_graph"))
 
-# Find relations that are bridges, and join their IDs to the edges
-add_parent_bridge_relations <- function(graph, raw_osmar) {
-  bridge_relations <- raw_osmar$relations$tags %>%
-    filter(k == "type", v == "bridge") %>%
-    left_join(raw_osmar$relations$refs, by = "id") %>%
-    filter(type == "way") %>%
-    mutate_at(vars(id, ref), as.character) %>%
-    select(name = ref, bridge_relation = id) %>%
-    distinct(name, .keep_all = TRUE)
-
-  graph %>%
-    activate(edges) %>%
-    left_join(bridge_relations, by = "name")
-}
-
-enrich_osmar_graph <- function(raw_osmar, graph_osmar, in_pgh_nodes = NULL, limits = NULL, keep_full = TRUE, excluded_highways, allowed_bridge_attributes) {
-  osmar_nodes <- osm_node_attributes(raw_osmar)
-  osmar_edges <- osm_edge_attributes(raw_osmar)
-
-  graph <- as_tbl_graph(graph_osmar, directed = TRUE) %>%
-    activate(nodes) %>%
-    left_join(osmar_nodes, by = c("name" = "id")) %>%
-    activate(edges) %>%
-    mutate_at(vars(name), as.character) %>%
-    left_join(osmar_edges, by = c("name" = "id")) %>%
-    select(-weight) %>%
-    filter_to_allowed_paths(excluded_highways) %>%
-    add_parent_bridge_relations(raw_osmar) %>%
-    mark_bridges(allowed_bridge_attributes) %>%
-    remove_unreachable_nodes() %>%
-    weight_by_distance()
-
-  # Trim graph down to specified nodes or specified geographic limits
-  if (!is.null(in_pgh_nodes) & keep_full) graph <- filter_bridges_to_nodes(graph, in_pgh_nodes)
-  if (!is.null(in_pgh_nodes) & !keep_full) graph <- filter_to_nodes(graph, in_pgh_nodes)
-  if (!is.null(limits)) graph <- filter_to_limits(graph, limits)
-
-  # Add reverse edges of non-one-way streets
   reversed_edges <- graph %>%
     as_tibble("edges") %>%
     filter(is.na(oneway) | oneway != "yes") %>%
     select(from = to, to = from, everything())
   graph <- bind_edges(graph, reversed_edges)
+}
 
-  # Give a final persistent ID for edges
+# Remove all isolated nodes in a graph
+remove_unreachable_nodes <- function(graph) {
+  stopifnot(inherits(graph, "tbl_graph"))
+
   graph %>%
-    select_main_component() %>%
+    activate(nodes) %>%
+    filter(!(node_is_isolated()))
+}
+
+# Keep only the biggest connected component of a graph
+select_main_component <- function(graph) {
+  stopifnot(inherits(graph, "tbl_graph"))
+
+  graph %>%
+    activate(nodes) %>%
+    mutate(component = group_components()) %>%
+    filter(component == 1) %>%
+    select(-component)
+}
+
+# Weights by carteisan distance of from and to nodes
+# the "conversion" factor is
+weight_by_distance <- function(graph) {
+  stopifnot(inherits(graph, "konigsberg_graph"))
+
+  graph %>%
     activate(edges) %>%
-    distinct(from, to, .keep_all = TRUE) %>%
-    mutate(.id = row_number())
+    mutate(distance = geosphere::distGeo(
+      p1 = cbind(.N()$lon[from], .N()$lat[from]),
+      p2 = cbind(.N()$lon[to], .N()$lat[to])))
 }
