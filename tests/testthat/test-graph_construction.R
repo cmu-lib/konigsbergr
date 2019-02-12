@@ -47,3 +47,36 @@ test_that("base graph construction", {
   expect_true(is_directed(base_graph))
   expect_true(is_connected(base_graph))
 })
+
+test_that("filter automobile ways", {
+  expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
+
+  filtered_graph <- automobile_highways(base_graph)
+  expect_true(is_connected(filtered_graph))
+
+  edge_table <- as_tibble(filtered_graph, "edges")
+  expect_false(any(edge_table[["access"]] == "no", na.rm = TRUE))
+  expect_true(all(edge_table[["highway"]] %in% c("residential",
+                                                   "tertiary",
+                                                   "primary",
+                                                   "secondary",
+                                                   "motorway_link",
+                                                   "unclassified",
+                                                   "motorway",
+                                                   "trunk",
+                                                   "primary_link",
+                                                   "trunk_link",
+                                                   "tertiary_link",
+                                                   "secondary_link")))
+})
+
+test_that("filter pedestrian ways", {
+  expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
+
+  filtered_graph <- pedestrian_highways(base_graph)
+  expect_true(is_connected(filtered_graph))
+
+  edge_table <- as_tibble(filtered_graph, "edges")
+  expect_false(any(edge_table[["foot"]] == "no", na.rm = TRUE))
+  expect_true(all(edge_table[["highway"]] %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")))
+})

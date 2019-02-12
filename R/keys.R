@@ -36,13 +36,12 @@ automobile_highways <- function(graph) {
                       "secondary_link")),
       (is.na(access) | access != "no")
     ) %>%
-    remove_unreachable_nodes()
+    select_main_component()
 }
 
 #' @describeIn way_filters Ways that are navigable by foot
 #' @export
 pedestrian_highways <- function(graph) {
-
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
@@ -50,7 +49,8 @@ pedestrian_highways <- function(graph) {
     filter(
       (highway %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")),
       (is.na(foot) | foot != "no")
-    )
+    ) %>%
+    select_main_component()
 }
 
 #' OSM Bridge filters
