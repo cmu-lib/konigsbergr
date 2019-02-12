@@ -66,7 +66,7 @@ to_konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_f
   marked_graph
 }
 
-create_base_konigsberg_graph <- function(graph) {
+create_base_konigsberg_graph <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   message("Creating base graph...", appendLF = FALSE)
@@ -87,6 +87,7 @@ create_base_konigsberg_graph <- function(graph) {
   message("complete!")
 
   class(graph) <- c(class(graph), "konigsberg_graph")
+  graph
 }
 
 collect_edge_bundles <- function(graph) {
