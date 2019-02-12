@@ -51,7 +51,16 @@ get_kongisberger_ways <- function(src) {
 #' Create a road and bridge network from OSM data
 #'
 #' Creates a base graph object with the appropriate edge and vertex attributes from OSM.
-to_konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filter = all_bridges) {
+#'
+#' @param src An [`osmar::osmar`] object
+#' @param path_filter A function that filters which Ways will be traversable in the graph. See [`way_filters`].
+#' @param bridge_filter A function that marks which Ways are bridges that need to be crossed. See [`bridge_filters`].
+#'
+#' @return A [`konigsberg_graph`] object.
+#'
+#' @importFrom magrittr %>%
+#' @export
+konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filter = all_bridges) {
   k_graph <- create_base_konigsberg_graph(src)
 
   message("Filtering graph to desired paths and bridges...", appendLF = FALSE)
@@ -66,22 +75,23 @@ to_konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_f
   marked_graph
 }
 
+#' @importFrom rlang .data
 create_base_konigsberg_graph <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   message("Creating base graph...", appendLF = FALSE)
-  base_graph <- as_igraph(src)
+  base_graph <- osmar::as_igraph(src)
   message("complete!")
 
   message("Creating base graph...", appendLF = FALSE)
   graph <- as_tbl_graph(base_graph, directed = TRUE) %>%
     activate(nodes) %>%
-    rename(id = name) %>%
-    mutate_at(vars(id), as.numeric) %>%
+    rename(id = .data$name) %>%
+    mutate_at(vars(.data$id), as.numeric) %>%
     left_join(get_kongisberger_nodes(src), by = "id") %>%
     activate(edges) %>%
-    rename(id = name) %>%
-    select(-weight) %>%
+    rename(id = .data$name) %>%
+    select(-.data$weight) %>%
     left_join(get_kongisberger_ways(src), by = "id") %>%
     select_main_component()
   message("complete!")

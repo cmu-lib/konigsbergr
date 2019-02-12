@@ -10,7 +10,7 @@ osm_edge_tag_keys <- function() c("access", "highway", "bicycle", "foot", "bridg
 #'
 #' @return An integer vector of OSM Way ids.
 #'
-#' @import dplyr
+#' @import tidygraph dplyr
 #' @name way_filters
 NULL
 
@@ -59,7 +59,7 @@ pedestrian_highways <- function(graph) {
 #'
 #' @inheritParams way_filters
 #'
-#' @import dplyr
+#' @import tidygraph dplyr
 #' @name bridge_filters
 NULL
 
@@ -91,6 +91,7 @@ main_bridges <- function(graph) {
         TRUE ~ FALSE))
 }
 
+#' @import tidygraph dplyr
 mark_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   stopifnot("is_bridge" %in% edge_attr_names(graph))

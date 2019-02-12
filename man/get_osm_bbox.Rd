@@ -7,7 +7,13 @@
 get_osm_bbox(xmin, xmax, ymin, ymax, server = "https://overpass-api.de")
 }
 \arguments{
-\item{xmin, }{xmax, ymin, ymax Numeric. Minimum and maximum latitude and longitude}
+\item{xmin}{Numeric. Minimum longitude}
+
+\item{xmax}{Numeric. Maximum longitude}
+
+\item{ymin}{Numeric. Minimum latitude}
+
+\item{ymax}{Numeric. Maximum latitude}
 
 \item{server}{Character. Hostname of an \href{http://overpass-api.de}{Overpass API server} Defaults to \url{https://overpass-api.de} although you may specify a different hostname.}
 }

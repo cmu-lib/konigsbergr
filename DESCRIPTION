@@ -19,16 +19,18 @@ Depends:
     R (>= 3.0.1)
 Imports: 
     assertthat,
+    dplyr,
+    geosphere,
     glue,
+    httr,
+    magrittr,
     osmar,
     pathfinder (>= 0.0.0.9000),
     purrr,
+    rlang,
     sf,
     tibble,
     tidygraph,
-    httr,
-    geosphere,
-    dplyr,
     tidyr
 Suggests: 
     covr,

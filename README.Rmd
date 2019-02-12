@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pathfinder
+# konigsbergr
 
 The goal of konigsbergr is to recreate the "Bridges of Königsberg" problem over any city by converting data from OpenStreetMap into a graph and traversing it.
 

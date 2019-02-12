@@ -6,7 +6,11 @@
 #'
 #' @seealso [`osmar::osmsource_api`] which iplements the same function but has stricter controls on the size that can be downloaded.
 #'
-#' @param xmin, xmax, ymin, ymax Numeric. Minimum and maximum latitude and longitude
+#' @param xmin Numeric. Minimum longitude
+#' @param xmax Numeric. Maximum longitude
+#' @param ymin Numeric. Minimum latitude
+#' @param ymax Numeric. Maximum latitude
+#'
 #' @param server Character. Hostname of an [Overpass API server](http://overpass-api.de) Defaults to <https://overpass-api.de> although you may specify a different hostname.
 #'
 #' @return An [`osmar`] object.
