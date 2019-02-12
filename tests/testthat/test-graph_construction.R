@@ -48,8 +48,8 @@ test_that("base graph construction", {
   expect_true(is_connected(base_graph))
 })
 
-test_that("filter automobile ways", {
-  expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
+test_that("filter ways", {
+  suppressMessages(base_graph <- create_base_konigsberg_graph(boston))
 
   filtered_graph <- automobile_highways(base_graph)
   expect_true(is_connected(filtered_graph))
@@ -68,10 +68,6 @@ test_that("filter automobile ways", {
                                                    "trunk_link",
                                                    "tertiary_link",
                                                    "secondary_link")))
-})
-
-test_that("filter pedestrian ways", {
-  expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
 
   filtered_graph <- pedestrian_highways(base_graph)
   expect_true(is_connected(filtered_graph))
@@ -79,4 +75,19 @@ test_that("filter pedestrian ways", {
   edge_table <- as_tibble(filtered_graph, "edges")
   expect_false(any(edge_table[["foot"]] == "no", na.rm = TRUE))
   expect_true(all(edge_table[["highway"]] %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")))
+})
+
+test_that("mark bridges", {
+  suppressMessages(base_graph <- create_base_konigsberg_graph(boston))
+  filtered_graph <- automobile_highways(base_graph)
+
+  bridged_graph <- main_bridges(filtered_graph)
+  expect_true("is_bridge" %in% edge_attr_names(bridged_graph))
+  expect_is(edge_attr(bridged_graph, "is_bridge"), "logical")
+  expect_false(anyNA(edge_attr(bridged_graph, "is_bridge")))
+
+  bridged_graph <- all_bridges(filtered_graph)
+  expect_true("is_bridge" %in% edge_attr_names(bridged_graph))
+  expect_is(edge_attr(bridged_graph, "is_bridge"), "logical")
+  expect_false(anyNA(edge_attr(bridged_graph, "is_bridge")))
 })
