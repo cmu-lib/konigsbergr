@@ -11,10 +11,10 @@ graph_to_sf <- function(graph, v_lat,v_lon) {
   edges <- igraph::as_data_frame(graph, "edges")
   nodes <- igraph::as_data_frame(graph, "vertices")
 
-  from_lat <- v_lat[match(edges$from, nodes$name)]
-  from_lon <- v_lon[match(edges$from, nodes$name)]
-  to_lat <- v_lat[match(edges$to, nodes$name)]
-  to_lon <- v_lon[match(edges$to, nodes$name)]
+  from_lat <- v_lat[edges$from]
+  from_lon <- v_lon[edges$from]
+  to_lat <- v_lat[edges$to]
+  to_lon <- v_lon[edges$to]
 
   st_edges <- mapply(function(flo, fla, tlo, tla) sf::st_linestring(matrix(c(flo, fla, tlo, tla), 2, 2, byrow = TRUE)), from_lon, from_lat, to_lon, to_lat, SIMPLIFY = FALSE)
   sf::st_geometry(edges) <- sf::st_sfc(st_edges, crs = 4326)
