@@ -100,13 +100,17 @@ create_base_konigsberg_graph <- function(src) {
   graph
 }
 
+#' Get a list of edge lists that represent multi-edge bridges
+#'
+#' @param A [`konigsberg_graph`] object
+#'
+#' @return A list of integer vectors representing edge indices
+#'
+#' @export
 collect_edge_bundles <- function(graph) {
-  all_bridge_ids <- graph %>%
-    as_tibble("edges") %>%
-    pull(bridge_id)
-
+  stopifnot(inherits(graph, "konigsberg_graph"))
+  all_bridge_ids <- igraph::edge_attr(graph, "bridge_id")
   unique_relation_ids <- unique(na.omit(all_bridge_ids))
-
   lapply(unique_relation_ids, function(x) which(x == all_bridge_ids))
 }
 
