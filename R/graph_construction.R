@@ -83,7 +83,7 @@ create_base_konigsberg_graph <- function(src) {
   base_graph <- osmar::as_igraph(src)
   message("complete!")
 
-  message("Creating base graph...", appendLF = FALSE)
+  message("Adding OSM attributes...", appendLF = FALSE)
   graph <- as_tbl_graph(base_graph, directed = TRUE) %>%
     activate(nodes) %>%
     rename(id = .data$name) %>%
