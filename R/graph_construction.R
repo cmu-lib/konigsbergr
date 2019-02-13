@@ -64,7 +64,7 @@ konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filt
   k_graph <- create_base_konigsberg_graph(src)
 
   message("Filtering graph to desired paths and bridges...", appendLF = FALSE)
-  marked_graph <- graph %>%
+  marked_graph <- k_graph %>%
     path_filter() %>%
     bridge_filter() %>%
     mark_bridges() %>%
