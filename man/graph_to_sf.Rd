@@ -2,9 +2,15 @@
 % Please edit documentation in R/sf.R
 \name{graph_to_sf}
 \alias{graph_to_sf}
+\alias{edges_to_sf}
+\alias{nodes_to_sf}
 \title{Convert an igraph object with lon/lat attributes to an SF linestring collection}
 \usage{
 graph_to_sf(graph, v_lat, v_lon)
+
+edges_to_sf(graph, v_lat, v_lon)
+
+nodes_to_sf(graph, v_lat, v_lon)
 }
 \arguments{
 \item{v_lat}{Numeric. Latitude values for each vertex}
@@ -19,3 +25,10 @@ A named list with an \code{edges} and a \code{nodes} \code{\link[sf:sfc]{sf::sfc
 \description{
 Convert an igraph object with lon/lat attributes to an SF linestring collection
 }
+\section{Functions}{
+\itemize{
+\item \code{edges_to_sf}: Return only the edges as \code{\link[sf:sfc_linestring]{sf::sfc_linestring}}
+
+\item \code{nodes_to_sf}: Return only the nodes as \code{\link[sf:sfc_point]{sf::sfc_point}}
+}}
+
