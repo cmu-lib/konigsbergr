@@ -136,7 +136,15 @@ remove_unreachable_nodes <- function(graph) {
     filter(!(node_is_isolated()))
 }
 
-# Keep only the biggest connected component of a graph
+#' Keep only the biggest connected component of a graph
+#'
+#' @param graph A [`tidygraph::tbl_graph`]
+#'
+#' @return A [`tidygraph::tbl_graph`] with one component
+#'
+#' @import tidygraph
+#'
+#' @export
 select_main_component <- function(graph) {
   stopifnot(inherits(graph, "tbl_graph"))
 
