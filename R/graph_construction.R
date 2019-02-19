@@ -44,8 +44,14 @@ get_kongisberger_ways <- function(src) {
     select(id = ref, bridge_relation = id) %>%
     distinct(id, .keep_all = TRUE)
 
+  relation_labels <- src$relations$tags %>%
+    as_tibble() %>%
+    filter(k == "name") %>%
+    select(bridge_relation = id, relation_label = v)
+
   way_tags %>%
-    left_join(relation_tags, by = "id")
+    left_join(relation_tags, by = "id") %>%
+    left_join(relation_labels, by = "bridge_relation")
 }
 
 #' Create a road and bridge network from OSM data
