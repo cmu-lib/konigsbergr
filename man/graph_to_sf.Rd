@@ -6,11 +6,14 @@
 \alias{nodes_to_sf}
 \title{Convert an igraph object with lon/lat attributes to an SF linestring collection}
 \usage{
-graph_to_sf(graph, v_lat, v_lon)
+graph_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
+  v_lon = igraph::vertex_attr(graph, "lon"))
 
-edges_to_sf(graph, v_lat, v_lon)
+edges_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
+  v_lon = igraph::vertex_attr(graph, "lon"))
 
-nodes_to_sf(graph, v_lat, v_lon)
+nodes_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
+  v_lon = igraph::vertex_attr(graph, "lon"))
 }
 \arguments{
 \item{v_lat}{Numeric. Latitude values for each vertex}

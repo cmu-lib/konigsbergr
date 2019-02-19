@@ -7,7 +7,7 @@
 #' @return A named list with an `edges` and a `nodes` [`sf::sfc`]
 #'
 #' @export
-graph_to_sf <- function(graph, v_lat, v_lon) {
+graph_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   edges <- edges_to_sf(graph, v_lat, v_lon)
   nodes <- nodes_to_sf(graph, v_lat, v_lon)
 
@@ -22,7 +22,7 @@ graph_to_sf <- function(graph, v_lat, v_lon) {
 
 #' @describeIn graph_to_sf Return only the edges as [`sf::sfc_linestring`]
 #' @export
-edges_to_sf <- function(graph, v_lat, v_lon) {
+edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   edges <- igraph::as_data_frame(graph, "edges")
 
   from_lat <- v_lat[edges$from]
@@ -38,7 +38,7 @@ edges_to_sf <- function(graph, v_lat, v_lon) {
 
 #' @describeIn graph_to_sf Return only the nodes as [`sf::sfc_point`]
 #' @export
-nodes_to_sf <- function(graph, v_lat, v_lon) {
+nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   nodes <- igraph::as_data_frame(graph, "vertices")
 
   st_nodes <- mapply(function(lon, lat) sf::st_point(c(lon, lat)), v_lon, v_lat, SIMPLIFY = FALSE)
