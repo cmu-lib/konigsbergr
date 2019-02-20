@@ -25,10 +25,13 @@ graph_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   edges <- igraph::as_data_frame(graph, "edges")
 
-  from_lat <- v_lat[edges$from]
-  from_lon <- v_lon[edges$from]
-  to_lat <- v_lat[edges$to]
-  to_lon <- v_lon[edges$to]
+  froms <- tail_of(graph, es = E(graph))
+  tos <- head_of(graph, es = E(graph))
+
+  from_lat <- v_lat[froms]
+  from_lon <- v_lon[froms]
+  to_lat <- v_lat[tos]
+  to_lon <- v_lon[tos]
 
   st_edges <- mapply(function(flo, fla, tlo, tla) sf::st_linestring(matrix(c(flo, fla, tlo, tla), 2, 2, byrow = TRUE)), from_lon, from_lat, to_lon, to_lat, SIMPLIFY = FALSE)
   sf::st_geometry(edges) <- sf::st_sfc(st_edges, crs = 4326)
