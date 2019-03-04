@@ -49,3 +49,38 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 
   nodes
 }
+
+#' Create an sf object from a konigsberg path
+#'
+#' Generates an [sf::sf] collection of line strings representing the pathway
+#' taken over the map. Can be visualized using base plotting functions or a
+#' library such as [mapview::mapview]
+#'
+#' @param graph A [`konigsberg_graph`]
+#' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges`]
+#'
+#' @return An object.
+#'
+#' @importFrom dplyr group_by mutate ungroup bind_cols
+#' @importFrom rlang .data
+#'
+#' @export
+pathway_to_sf <- function(graph, pathway) {
+  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(pathway, "konigsberg_path"))
+
+  edges_sf <- edges_to_sf(graph, V(graph)$lat, V(graph)$lon) %>%
+    dplyr::mutate(osm_url = glue::glue("https://openstreetmap.org/way/{id}"))
+
+  augmented_pathway <- augment(pathway) %>%
+    group_by(.data$bundle_id) %>%
+    mutate(total_times_bridge_crossed = max(.data$times_bundle_crossed)) %>%
+    ungroup()
+
+  bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
+}
+
+plot.konigsberg_path <- function(graph, pathway, ...) {
+  path_sf <- pathway_to_sf(graph, pathway)
+  mapview(path_sf)
+}

@@ -24,6 +24,7 @@ Imports:
     dplyr,
     glue,
     httr,
+    mapview,
     osmar,
     pathfinder (>= 0.0.0.9000),
     purrr,
