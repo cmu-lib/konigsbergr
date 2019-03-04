@@ -61,7 +61,7 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #'
 #' @return An object.
 #'
-#' @importFrom dplyr group_by mutate ungroup bind_cols
+#' @importFrom dplyr group_by mutate ungroup bind_cols case_when
 #' @importFrom rlang .data
 #'
 #' @export
@@ -69,18 +69,29 @@ pathway_to_sf <- function(graph, pathway) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   stopifnot(inherits(pathway, "konigsberg_path"))
 
-  edges_sf <- edges_to_sf(graph, V(graph)$lat, V(graph)$lon) %>%
-    dplyr::mutate(osm_url = glue::glue("https://openstreetmap.org/way/{id}"))
+  edges_sf <- edges_to_sf(graph) %>%
+    mutate(
+      osm_url = case_when(
+        is.na(.data$bridge_relation) ~ glue::glue("https://openstreetmap.org/way/{bridge_id}"),
+        !is.na(.data$bridge_relation) ~ glue::glue("https://openstreetmap.org/relation/{bridge_id}")
+      )
+    )
 
-  augmented_pathway <- augment(pathway) %>%
+  augmented_pathway <- pathfinder::augment(pathway) %>%
     group_by(.data$bundle_id) %>%
     mutate(total_times_bridge_crossed = max(.data$times_bundle_crossed)) %>%
     ungroup()
 
-  bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
+  res <- bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
+  class(res) <- c(class(res), "konigsberg_sf")
+  res
 }
 
 plot.konigsberg_path <- function(graph, pathway, ...) {
   path_sf <- pathway_to_sf(graph, pathway)
-  mapview(path_sf)
+  mapview(res,
+          zcol = "total_times_bridge_crossed",
+          color = c("#2B83BA", "#ABDDA4", "#FDAE61"),
+          lwd = 4
+  )
 }
