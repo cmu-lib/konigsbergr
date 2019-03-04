@@ -96,7 +96,7 @@ pathway_to_sf <- function(graph, pathway) {
 #' @return A [`mapview::mapview`] object
 #'
 #' @export
-view_konigsberg_path <- function(graph, pathway, ...) {
+view_konigsberg_path <- function(graph, pathway) {
   path_sf <- pathway_to_sf(graph, pathway)
   mapview(path_sf,
           zcol = "total_times_bridge_crossed",
