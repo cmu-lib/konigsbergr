@@ -175,12 +175,14 @@ select_main_component <- function(graph) {
 }
 
 # Weights by Haversine distance between nodes
+#' @importFrom tidygraph .N activate
+#' @importFrom rlang .data
 weight_by_distance <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
     activate(edges) %>%
-    mutate(distance = distGeo(
-      p1 = cbind(.N()$lon[from], .N()$lat[from]),
-      p2 = cbind(.N()$lon[to], .N()$lat[to])))
+    dplyr::mutate(distance = geosphere::distGeo(
+      p1 = cbind(.N()$lon[.data$from], .N()$lat[.data$from]),
+      p2 = cbind(.N()$lon[.data$to], .N()$lat[.data$to])))
 }

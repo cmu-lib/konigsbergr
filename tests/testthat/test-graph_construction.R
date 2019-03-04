@@ -88,14 +88,33 @@ test_that("mark bridges", {
 })
 
 test_that("select main component", {
-  multi_graph <- play_islands(4, 10, 0.7, 0)
+  multi_graph <- tidygraph::play_islands(4, 10, 0.7, 0)
   single_graph <- select_main_component(multi_graph)
   expect_equal(components(single_graph)[["no"]], 1L)
 })
 
 test_that("weight by distance", {
-  nodes <- tibble(
+  dnodes <- tibble::tibble(
+    name = c("a", "b", "c"),
     lat = c(45.991, 45.01, 46.1),
-    lon = c()
+    lon = c(31.002, 32, 31.500)
   )
+
+  dedges <- tibble::tibble(
+    from = c("a", "b", "c"),
+    to = c("b", "c", "a")
+  )
+
+  dgraph <- as_tbl_graph(graph_from_data_frame(d = dedges, vertices = dnodes))
+  class(dgraph) <- c(class(dgraph), "konigsberg_graph")
+
+  ifrom <- 1:3
+  ito <- c(2, 3, 1)
+  ex_dist <- geosphere::distGeo(p1 = cbind(dnodes$lon[ifrom], dnodes$lat[ifrom]),
+                                p2 = cbind(dnodes$lon[ito], dnodes$lat[ito]))
+
+  weighted_graph <- weight_by_distance(dgraph)
+
+  expect_true("distance" %in% edge_attr_names(weighted_graph))
+  expect_equivalent(edge_attr(weighted_graph, "distance"), ex_dist)
 })
