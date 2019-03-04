@@ -80,11 +80,19 @@ test_that("mark bridges", {
   expect_true("is_bridge" %in% edge_attr_names(bridged_graph))
   expect_is(edge_attr(bridged_graph, "is_bridge"), "logical")
   expect_false(anyNA(edge_attr(bridged_graph, "is_bridge")))
+  bridge_ids <- edge_attr(mark_bridges(bridged_graph), "bridge_id")
+  expect_is(bridge_ids, "numeric")
+  expect_true(any(!is.na(bridge_ids)))
 
   bridged_graph <- all_bridges(filtered_graph)
   expect_true("is_bridge" %in% edge_attr_names(bridged_graph))
   expect_is(edge_attr(bridged_graph, "is_bridge"), "logical")
   expect_false(anyNA(edge_attr(bridged_graph, "is_bridge")))
+  bridge_ids <- edge_attr(mark_bridges(bridged_graph), "bridge_id")
+  expect_is(bridge_ids, "numeric")
+  expect_true(any(!is.na(bridge_ids)))
+})
+
 })
 
 test_that("select main component", {
