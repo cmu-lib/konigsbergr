@@ -37,7 +37,7 @@ test_that("base graph construction", {
   expect_is(base_graph, "tbl_graph")
 
   expect_equal(components(base_graph)$no, 1L)
-  expect_true(all(edge_attr_names(base_graph) %in% c("id", "label", osm_edge_tag_keys(), "bridge_relation")))
+  expect_true(all(edge_attr_names(base_graph) %in% c("id", "label", osm_edge_tag_keys(), "bridge_relation", "relation_label")))
   expect_true(all(vertex_attr_names(base_graph) %in% c("id", "lat", "lon", "label")))
   expect_true(is_directed(base_graph))
   expect_true(is_connected(base_graph))
