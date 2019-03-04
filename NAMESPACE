@@ -3,6 +3,7 @@
 export(all_bridges)
 export(automobile_highways)
 export(collect_edge_bundles)
+export(cross_all_bridges)
 export(edges_to_sf)
 export(get_osm_bbox)
 export(graph_to_sf)

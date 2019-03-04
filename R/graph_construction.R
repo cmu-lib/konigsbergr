@@ -85,6 +85,7 @@ konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filt
     reciprocal_two_way_streets()
   message("complete!")
 
+  class(marked_graph) <- c(class(marked_graph), "konigsberg_graph")
   marked_graph
 }
 
@@ -111,7 +112,7 @@ create_base_konigsberg_graph <- function(src) {
     select_main_component()
   message("complete!")
 
-  class(graph) <- c(class(graph), "konigsberg_graph")
+  class(graph) <- c(class(graph), "base_konigsberg_graph")
   graph
 }
 
@@ -135,7 +136,7 @@ collect_edge_bundles <- function(graph) {
 #' @importFrom rlang .data
 #' @importFrom dplyr filter select everything
 reciprocal_two_way_streets <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
 
   reversed_edges <- graph %>%
     as_tibble("edges") %>%
@@ -178,7 +179,7 @@ select_main_component <- function(graph) {
 #' @importFrom tidygraph .N activate
 #' @importFrom rlang .data
 weight_by_distance <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
 
   graph %>%
     activate(edges) %>%

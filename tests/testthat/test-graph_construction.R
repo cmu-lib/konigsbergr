@@ -33,7 +33,7 @@ test_that("extracts OSM ways", {
 test_that("base graph construction", {
   expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
 
-  expect_is(base_graph, "konigsberg_graph")
+  expect_is(base_graph, "base_konigsberg_graph")
   expect_is(base_graph, "tbl_graph")
 
   expect_equal(components(base_graph)$no, 1L)
@@ -93,6 +93,16 @@ test_that("mark bridges", {
   expect_true(any(!is.na(bridge_ids)))
 })
 
+test_that("collect edge bundles", {
+  suppressMessages({
+    bridged_graph <- konigsberg_graph(boston)
+  })
+
+  bridge_ids <- unique(na.omit(edge_attr(bridged_graph, "bridge_id")))
+
+  ebs <- collect_edge_bundles(bridged_graph)
+  expect_length(ebs, length(bridge_ids))
+  res <- lapply(ebs, function(x) expect_gt(length(x), 0))
 })
 
 test_that("select main component", {
@@ -114,7 +124,7 @@ test_that("weight by distance", {
   )
 
   dgraph <- as_tbl_graph(graph_from_data_frame(d = dedges, vertices = dnodes))
-  class(dgraph) <- c(class(dgraph), "konigsberg_graph")
+  class(dgraph) <- c(class(dgraph), "base_konigsberg_graph")
 
   ifrom <- 1:3
   ito <- c(2, 3, 1)

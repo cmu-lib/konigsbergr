@@ -17,7 +17,7 @@ NULL
 #' @describeIn way_filters Ways that are navigable in an automobile
 #' @export
 automobile_highways <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
 
   graph %>%
     tidygraph::activate(edges) %>%
@@ -42,7 +42,7 @@ automobile_highways <- function(graph) {
 #' @describeIn way_filters Ways that are navigable by foot
 #' @export
 pedestrian_highways <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
 
   graph %>%
     tidygraph::activate(edges) %>%
@@ -65,7 +65,8 @@ NULL
 #' @describeIn bridge_filters Include all OSM bridges
 #' @export
 all_bridges <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
+  stopifnot("bridge" %in% edge_attr_names(graph))
 
   graph %>%
     tidygraph::activate(edges) %>%
@@ -79,7 +80,8 @@ all_bridges <- function(graph) {
 #' @describeIn bridge_filters Only use major bridges, excluding any on/off ramps
 #' @export
 main_bridges <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
+    stopifnot("highway" %in% edge_attr_names(graph))
 
   graph %>%
     tidygraph::activate(edges) %>%
@@ -91,7 +93,7 @@ main_bridges <- function(graph) {
 }
 
 mark_bridges <- function(graph) {
-  stopifnot(inherits(graph, "konigsberg_graph"))
+  stopifnot(inherits(graph, "base_konigsberg_graph"))
   stopifnot("is_bridge" %in% edge_attr_names(graph))
 
   graph %>%
