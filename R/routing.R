@@ -12,8 +12,10 @@ cross_all_bridges <- function(graph, starting_node = vertex_attr(graph, "id", 1)
   stopifnot(starting_node %in% vertex_attr(graph, "id"))
   bridge_bundles <- collect_edge_bundles(graph)
 
-  pathfinder::greedy_search(graph,
+  res <- pathfinder::greedy_search(graph,
                 edge_bundles = bridge_bundles,
                 distances = E(graph)$distance,
                 ...)
+  class(res) <- c(class(res), "konigsberg_path")
+  res
 }
