@@ -7,7 +7,7 @@
 collect_edge_bundles(graph)
 }
 \arguments{
-\item{A}{\code{\link{konigsberg_graph}} object}
+\item{graph}{A \code{\link{konigsberg_graph}} object}
 }
 \value{
 A list of integer vectors representing edge indices

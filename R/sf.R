@@ -1,6 +1,6 @@
 #' Convert an igraph object with lon/lat attributes to an SF linestring collection
 #'
-#' @param [`igraph::igraph`] object
+#' @param graph An [`igraph::igraph`] object
 #' @param v_lat Numeric. Latitude values for each vertex
 #' @param v_lon Numeric. Longitude values for each vertex
 #'

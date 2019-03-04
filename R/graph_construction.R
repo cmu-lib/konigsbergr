@@ -117,7 +117,7 @@ create_base_konigsberg_graph <- function(src) {
 
 #' Get a list of edge lists that represent multi-edge bridges
 #'
-#' @param A [`konigsberg_graph`] object
+#' @param graph A [`konigsberg_graph`] object
 #'
 #' @return A list of integer vectors representing edge indices
 #'
@@ -174,9 +174,7 @@ select_main_component <- function(graph) {
     select(-.data$component)
 }
 
-#' Weights by Haversine distance between nodes
-#' @import geosphere
-#' @importFrom tidygraph as_tbl_graph activate
+# Weights by Haversine distance between nodes
 weight_by_distance <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 

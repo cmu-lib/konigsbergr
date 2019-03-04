@@ -16,11 +16,11 @@ nodes_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
   v_lon = igraph::vertex_attr(graph, "lon"))
 }
 \arguments{
+\item{graph}{An \code{\link[igraph:igraph]{igraph::igraph}} object}
+
 \item{v_lat}{Numeric. Latitude values for each vertex}
 
 \item{v_lon}{Numeric. Longitude values for each vertex}
-
-\item{[`igraph::igraph`]}{object}
 }
 \value{
 A named list with an \code{edges} and a \code{nodes} \code{\link[sf:sfc]{sf::sfc}}
