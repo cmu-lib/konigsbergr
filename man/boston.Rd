@@ -4,7 +4,7 @@
 \name{boston}
 \alias{boston}
 \title{A small sample of OSM data from Boston, Massachusetts}
-\format{An object of class \code{osmar} (inherits from \code{list}) of dimension 22939 x 2809 x 116.}
+\format{An object of class \code{osmar} (inherits from \code{list}) of dimension 22939 x 2809 x 117.}
 \source{
 https://www.openstreetmap.org
 }

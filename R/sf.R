@@ -87,9 +87,18 @@ pathway_to_sf <- function(graph, pathway) {
   res
 }
 
-plot.konigsberg_path <- function(graph, pathway, ...) {
+#' Plot bridge crossing pathway on a Leaflet map
+#'
+#' This transforms the resulting pathway into an sf project and plots it onto a Leaflet map using [`mapview::mapview`]
+#'
+#' @inheritParams pathway_to_sf
+#'
+#' @return A [`mapview::mapview`] object
+#'
+#' @export
+view_konigsberg_path <- function(graph, pathway, ...) {
   path_sf <- pathway_to_sf(graph, pathway)
-  mapview(res,
+  mapview(path_sf,
           zcol = "total_times_bridge_crossed",
           color = c("#2B83BA", "#ABDDA4", "#FDAE61"),
           lwd = 4

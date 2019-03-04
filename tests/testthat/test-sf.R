@@ -18,4 +18,15 @@ test_that("graph to sf", {
   expect_is(boston_linestrings, "sf")
   expect_true(all(st_geometry_type(boston_linestrings) == "LINESTRING"))
   expect_equal(nrow(boston_linestrings), ecount(boston_graph))
+
+  suppressMessages({
+    boston_pathway <- cross_all_bridges(boston_graph)
+  })
+
+  path_lines <- pathway_to_sf(boston_graph, boston_pathway)
+  expect_is(path_lines, "sf")
+  expect_is(path_lines, "konigsberg_sf")
+
+  boston_map <- view_konigsberg_path(boston_graph, boston_pathway)
+  expect_is(boston_map, "mapview")
 })
