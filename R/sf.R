@@ -98,7 +98,7 @@ pathway_to_sf <- function(graph, pathway) {
 #' @export
 view_konigsberg_path <- function(graph, pathway) {
   path_sf <- pathway_to_sf(graph, pathway)
-  mapview(path_sf,
+  mapview::mapview(path_sf,
           zcol = "total_times_bridge_crossed",
           color = c("#2B83BA", "#ABDDA4", "#FDAE61"),
           lwd = 4

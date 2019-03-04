@@ -4,7 +4,7 @@
 \alias{view_konigsberg_path}
 \title{Plot bridge crossing pathway on a Leaflet map}
 \usage{
-view_konigsberg_path(graph, pathway, ...)
+view_konigsberg_path(graph, pathway)
 }
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
