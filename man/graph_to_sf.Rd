@@ -30,8 +30,8 @@ Convert an igraph object with lon/lat attributes to an SF linestring collection
 }
 \section{Functions}{
 \itemize{
-\item \code{edges_to_sf}: Return only the edges as \code{\link[sf:sfc_linestring]{sf::sfc_linestring}}
+\item \code{edges_to_sf}: Return only the edges as \code{\link[sf:st_linestring]{sf::st_linestring}}
 
-\item \code{nodes_to_sf}: Return only the nodes as \code{\link[sf:sfc_point]{sf::sfc_point}}
+\item \code{nodes_to_sf}: Return only the nodes as \code{\link[sf:st_point]{sf::st_point}}
 }}
 

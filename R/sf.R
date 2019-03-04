@@ -20,7 +20,7 @@ graph_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
   )
 }
 
-#' @describeIn graph_to_sf Return only the edges as [`sf::sfc_linestring`]
+#' @describeIn graph_to_sf Return only the edges as [`sf::st_linestring`]
 #' @export
 edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   edges <- igraph::as_data_frame(graph, "edges")
@@ -39,7 +39,7 @@ edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
   edges
 }
 
-#' @describeIn graph_to_sf Return only the nodes as [`sf::sfc_point`]
+#' @describeIn graph_to_sf Return only the nodes as [`sf::st_point`]
 #' @export
 nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   nodes <- igraph::as_data_frame(graph, "vertices")
