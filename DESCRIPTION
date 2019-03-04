@@ -14,16 +14,16 @@ Description: A playful attempt to recreate Euler's "Bridges of
 License: MIT + file LICENSE
 URL: https://github.com/dSHARP-CMU/konigsbergr
 BugReports: https://github.com/dSHARP-CMU/konigsbergr/issues
-Depends: 
+Depends:
+    geosphere,
     igraph,
+    magrittr,
     R (>= 3.0.1)
 Imports: 
     assertthat,
     dplyr,
-    geosphere,
     glue,
     httr,
-    magrittr,
     osmar,
     pathfinder (>= 0.0.0.9000),
     purrr,

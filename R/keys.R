@@ -10,7 +10,7 @@ osm_edge_tag_keys <- function() c("access", "highway", "bicycle", "foot", "bridg
 #'
 #' @return An integer vector of OSM Way ids.
 #'
-#' @import tidygraph dplyr
+#' @importFrom rlang .data
 #' @name way_filters
 NULL
 
@@ -20,9 +20,9 @@ automobile_highways <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
-    activate(edges) %>%
-    filter(
-      (highway %in% c("residential",
+    tidygraph::activate(edges) %>%
+    dplyr::filter(
+      (.data$highway %in% c("residential",
                       "tertiary",
                       "primary",
                       "secondary",
@@ -34,7 +34,7 @@ automobile_highways <- function(graph) {
                       "trunk_link",
                       "tertiary_link",
                       "secondary_link")),
-      (is.na(access) | access != "no")
+      (is.na(.data$access) | .data$access != "no")
     ) %>%
     select_main_component()
 }
@@ -45,10 +45,10 @@ pedestrian_highways <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
-    activate(edges) %>%
-    filter(
-      (highway %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")),
-      (is.na(foot) | foot != "no")
+    tidygraph::activate(edges) %>%
+    dplyr::filter(
+      (.data$highway %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")),
+      (is.na(.data$foot) | .data$foot != "no")
     ) %>%
     select_main_component()
 }
@@ -59,7 +59,6 @@ pedestrian_highways <- function(graph) {
 #'
 #' @inheritParams way_filters
 #'
-#' @import tidygraph dplyr
 #' @name bridge_filters
 NULL
 
@@ -69,10 +68,10 @@ all_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
-    activate(edges) %>%
-    mutate(
-      is_bridge = case_when(
-        bridge == "yes" ~ TRUE,
+    tidygraph::activate(edges) %>%
+    dplyr::mutate(
+      is_bridge = dplyr::case_when(
+        .data$bridge == "yes" ~ TRUE,
         # When in doubt, it's not a bridge
         TRUE ~ FALSE))
 }
@@ -83,25 +82,24 @@ main_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
-    activate(edges) %>%
-    mutate(
-      is_bridge = case_when(
-        bridge == "yes" & !(highway %in% c("motorway_link", "trunk_link", "primary_link", "secondary_link", "tertiary_link")) ~ TRUE,
+    tidygraph::activate(edges) %>%
+    dplyr::mutate(
+      is_bridge = dplyr::case_when(
+        .data$bridge == "yes" & !(.data$highway %in% c("motorway_link", "trunk_link", "primary_link", "secondary_link", "tertiary_link")) ~ TRUE,
         # When in doubt, it's not a bridge
         TRUE ~ FALSE))
 }
 
-#' @import tidygraph dplyr
 mark_bridges <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   stopifnot("is_bridge" %in% edge_attr_names(graph))
 
   graph %>%
-    activate(edges) %>%
-    mutate(
-      bridge_id = case_when(
-        is_bridge & !is.na(bridge_relation) ~ bridge_relation,
-        is_bridge ~ id,
+    tidygraph::activate(edges) %>%
+    dplyr::mutate(
+      bridge_id = dplyr::case_when(
+        .data$is_bridge & !is.na(.data$bridge_relation) ~ .data$bridge_relation,
+        .data$is_bridge ~ .data$id,
         TRUE ~ NA_real_
       )
     )

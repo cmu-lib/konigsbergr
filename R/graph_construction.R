@@ -1,53 +1,60 @@
 # Constructing a road/bridge graph from an osmar object ----
 
 # Extract a table of OSM nodes bearing IDs, lat, lon, and label
+#' @importFrom rlang .data
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr select filter mutate_at rename left_join
+#' @importFrom tidyr spread
 get_kongisberger_nodes <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   base_attrs <- src$nodes$attrs %>%
-    select(id, lat, lon) %>%
+    select(.data$id, .data$lat, .data$lon) %>%
     as_tibble()
 
   node_tags <- src$nodes$tags %>%
     as_tibble() %>%
-    filter(k == "name") %>%
-    mutate_at(vars(v), as.character) %>%
-    spread(k, v, drop = TRUE) %>%
+    filter(.data$k == "name") %>%
+    mutate_at(vars(.data$v), as.character) %>%
+    spread(.data$k, .data$v, drop = TRUE) %>%
     # To avoid collision with the "name" id used by igraph/tidygraph, use the
     # term "label" for OSM name
-    rename(label = name)
+    rename(label = .data$name)
 
   base_attrs %>%
     left_join(node_tags, by = "id")
 }
 
 # Extract a table of OSM Ways bearing ids, labels, and selected tag values
-#' @import dplyr tidyr
+#' @importFrom rlang .data
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr filter mutate_at rename left_join select distinct vars
+#' @importFrom tidyr spread
 get_kongisberger_ways <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   way_tags <- src$ways$tags %>%
     as_tibble() %>%
-    filter(k %in% c(osm_edge_tag_keys(), "name")) %>%
-    mutate_at(vars(v), as.character) %>%
-    spread(k, v, drop = TRUE) %>%
+    filter(.data$k %in% c(osm_edge_tag_keys(), "name")) %>%
+    mutate_at(vars(.data$v), as.character) %>%
+    spread(.data$k, .data$v, drop = TRUE) %>%
     # To avoid collision with the "name" id used by igraph/tidygraph, use the
     # term "label" for OSM feature name
-    rename(label = name)
+    rename(label = .data$name)
 
   # Collect parent bridge relations
   relation_tags <- src$relations$tags %>%
     as_tibble() %>%
-    filter(k == "type", v == "bridge") %>%
+    filter(.data$k == "type", .data$v == "bridge") %>%
     left_join(src$relations$refs, by = "id") %>%
-    filter(type == "way") %>%
-    select(id = ref, bridge_relation = id) %>%
-    distinct(id, .keep_all = TRUE)
+    filter(.data$type == "way") %>%
+    select(id = .data$ref, bridge_relation = .data$id) %>%
+    distinct(.data$id, .keep_all = TRUE)
 
   relation_labels <- src$relations$tags %>%
     as_tibble() %>%
-    filter(k == "name") %>%
-    select(bridge_relation = id, relation_label = v)
+    filter(.data$k == "name") %>%
+    select(bridge_relation = .data$id, relation_label = .data$v)
 
   way_tags %>%
     left_join(relation_tags, by = "id") %>%
@@ -82,6 +89,8 @@ konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filt
 }
 
 #' @importFrom rlang .data
+#' @importFrom dplyr rename mutate_at left_join select
+#' @importFrom tidygraph as_tbl_graph activate
 create_base_konigsberg_graph <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
@@ -116,30 +125,33 @@ create_base_konigsberg_graph <- function(src) {
 collect_edge_bundles <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   all_bridge_ids <- igraph::edge_attr(graph, "bridge_id")
-  unique_relation_ids <- unique(na.omit(all_bridge_ids))
+  unique_relation_ids <- unique(stats::na.omit(all_bridge_ids))
   lapply(unique_relation_ids, function(x) which(x == all_bridge_ids))
 }
 
 # Graph utilities ----
 
 # Add reverse edges of non-one-way streets
+#' @importFrom rlang .data
+#' @importFrom dplyr filter select everything
 reciprocal_two_way_streets <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   reversed_edges <- graph %>%
     as_tibble("edges") %>%
-    filter(is.na(oneway) | oneway != "yes") %>%
-    select(from = to, to = from, everything())
-  graph <- bind_edges(graph, reversed_edges)
+    filter(is.na(.data$oneway) | .data$oneway != "yes") %>%
+    select(from = .data$to, to = .data$from, everything())
+  graph <- tidygraph::bind_edges(graph, reversed_edges)
 }
 
 # Remove all isolated nodes in a graph
+#' @importFrom tidygraph as_tbl_graph activate
 remove_unreachable_nodes <- function(graph) {
   stopifnot(inherits(graph, "tbl_graph"))
 
   graph %>%
     activate(nodes) %>%
-    filter(!(node_is_isolated()))
+    filter(!(tidygraph::node_is_isolated()))
 }
 
 #' Keep only the biggest connected component of a graph
@@ -148,27 +160,29 @@ remove_unreachable_nodes <- function(graph) {
 #'
 #' @return A [`tidygraph::tbl_graph`] with one component
 #'
-#' @import tidygraph
-#'
+#' @importFrom tidygraph as_tbl_graph activate
+#' @importFrom dplyr filter select mutate
+#' @importFrom rlang .data
 #' @export
 select_main_component <- function(graph) {
   stopifnot(inherits(graph, "tbl_graph"))
 
   graph %>%
     activate(nodes) %>%
-    mutate(component = group_components()) %>%
-    filter(component == 1) %>%
-    select(-component)
+    mutate(component = tidygraph::group_components()) %>%
+    filter(.data$component == 1) %>%
+    select(-.data$component)
 }
 
-# Weights by carteisan distance of from and to nodes
-# the "conversion" factor is
+#' Weights by Haversine distance between nodes
+#' @import geosphere
+#' @importFrom tidygraph as_tbl_graph activate
 weight_by_distance <- function(graph) {
   stopifnot(inherits(graph, "konigsberg_graph"))
 
   graph %>%
     activate(edges) %>%
-    mutate(distance = geosphere::distGeo(
+    mutate(distance = distGeo(
       p1 = cbind(.N()$lon[from], .N()$lat[from]),
       p2 = cbind(.N()$lon[to], .N()$lat[to])))
 }

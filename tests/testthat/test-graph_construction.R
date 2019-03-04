@@ -86,3 +86,16 @@ test_that("mark bridges", {
   expect_is(edge_attr(bridged_graph, "is_bridge"), "logical")
   expect_false(anyNA(edge_attr(bridged_graph, "is_bridge")))
 })
+
+test_that("select main component", {
+  multi_graph <- play_islands(4, 10, 0.7, 0)
+  single_graph <- select_main_component(multi_graph)
+  expect_equal(components(single_graph)[["no"]], 1L)
+})
+
+test_that("weight by distance", {
+  nodes <- tibble(
+    lat = c(45.991, 45.01, 46.1),
+    lon = c()
+  )
+})
