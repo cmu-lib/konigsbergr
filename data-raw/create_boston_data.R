@@ -5,6 +5,8 @@ raw_boston <- get_osm_bbox(xmin = -71.1383,
                            ymin = 42.3592,
                            ymax = 42.3754)
 
+# Must explicitly set the encoding of all characters in the data to UTF-8 to
+# pass CRAN checks of the data
 levels(raw_boston$nodes$attrs$user) <- iconv(levels(raw_boston$nodes$attrs$user), "UTF-8")
 levels(raw_boston$ways$attrs$user) <- iconv(levels(raw_boston$ways$attrs$user), "UTF-8")
 levels(raw_boston$relations$attrs$user) <- iconv(levels(raw_boston$relations$attrs$user), "UTF-8")
