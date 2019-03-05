@@ -63,6 +63,7 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #'
 #' @importFrom dplyr group_by mutate ungroup bind_cols case_when
 #' @importFrom rlang .data
+#' @importFrom utils head tail
 #'
 #' @export
 pathway_to_sf <- function(graph, pathway) {
@@ -72,8 +73,9 @@ pathway_to_sf <- function(graph, pathway) {
   edges_sf <- edges_to_sf(graph) %>%
     mutate(
       osm_url = case_when(
-        is.na(.data$bridge_relation) ~ glue::glue("https://openstreetmap.org/way/{bridge_id}"),
-        !is.na(.data$bridge_relation) ~ glue::glue("https://openstreetmap.org/relation/{bridge_id}")
+        !is.na(.data$bridge_id) ~ glue::glue("https://openstreetmap.org/way/{bridge_id}"),
+        !is.na(.data$bridge_relation) ~ glue::glue("https://openstreetmap.org/relation/{bridge_relation}"),
+        TRUE ~ glue::glue("https://openstreetmap.org/way/{id}")
       )
     )
 
@@ -82,9 +84,19 @@ pathway_to_sf <- function(graph, pathway) {
     mutate(total_times_bridge_crossed = max(.data$times_bundle_crossed)) %>%
     ungroup()
 
-  res <- bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
-  class(res) <- c(class(res), "konigsberg_sf")
-  res
+  pathway_sf <- bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
+
+  # Get start and end point and add to map
+  start_point <- head(head(pathway$vpath, 1)[[1]], 1)
+  end_point <- tail(tail(pathway$vpath, 1)[[1]], 1)
+
+  nodes_sf <- nodes_to_sf(graph)[c(start_point, end_point),]
+  nodes_sf$start <- c("Beginning", "End")
+
+  structure(list(
+    pathway = pathway_sf,
+    terminals = nodes_sf),
+    class = c("list", "konigsberg_sf"))
 }
 
 #' Plot bridge crossing pathway on a Leaflet map
@@ -95,12 +107,20 @@ pathway_to_sf <- function(graph, pathway) {
 #'
 #' @return A [`mapview::mapview`] object
 #'
+#' @import leaflet
+#'
 #' @export
 view_konigsberg_path <- function(graph, pathway) {
   path_sf <- pathway_to_sf(graph, pathway)
-  mapview::mapview(path_sf,
-          zcol = "total_times_bridge_crossed",
-          color = c("#2B83BA", "#ABDDA4", "#FDAE61"),
-          lwd = 4
-  )
+
+  cross_pal <- colorFactor(c("#2B83BA", "#ABDDA4", "#FDAE61"),
+                           path_sf$pathway$total_times_bridge_crossed)
+
+  lf <- leaflet(path_sf$pathway) %>%
+    addProviderTiles(leaflet::providers$CartoDB.Positron) %>%
+    addPolylines(opacity = 0.6, color = ~cross_pal(total_times_bridge_crossed),
+                 label = ~label, popup = ~glue::glue("<a href='{osm_url}'>{osm_url}</a>")) %>%
+    addCircleMarkers(data = path_sf$terminals, label = ~start, color = c("blue", "red")) %>%
+    addLegend("topright", pal = cross_pal, values = ~total_times_bridge_crossed, title = "Times bridge has been crossed",
+              na.label = "Non-bridge")
 }

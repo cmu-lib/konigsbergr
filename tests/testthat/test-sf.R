@@ -24,9 +24,8 @@ test_that("graph to sf", {
   })
 
   path_lines <- pathway_to_sf(boston_graph, boston_pathway)
-  expect_is(path_lines, "sf")
   expect_is(path_lines, "konigsberg_sf")
 
   boston_map <- view_konigsberg_path(boston_graph, boston_pathway)
-  expect_is(boston_map, "mapview")
+  expect_is(boston_map, "leaflet")
 })
