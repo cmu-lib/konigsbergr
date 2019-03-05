@@ -12,11 +12,11 @@ test_that("graph to sf", {
   boston_linestrings <- boston_sf$edges
 
   expect_is(boston_points, "sf")
-  expect_true(all(st_geometry_type(boston_points) == "POINT"))
+  expect_true(all(sf::st_geometry_type(boston_points) == "POINT"))
   expect_equal(nrow(boston_points), vcount(boston_graph))
 
   expect_is(boston_linestrings, "sf")
-  expect_true(all(st_geometry_type(boston_linestrings) == "LINESTRING"))
+  expect_true(all(sf::st_geometry_type(boston_linestrings) == "LINESTRING"))
   expect_equal(nrow(boston_linestrings), ecount(boston_graph))
 
   suppressMessages({
