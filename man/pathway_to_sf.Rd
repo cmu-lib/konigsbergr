@@ -20,6 +20,5 @@ representing the start and end nodes of the path.
 }
 \description{
 Generates an \link[sf:sf]{sf::sf} collection of line strings representing the pathway
-taken over the map. Can be visualized using base plotting functions or a
-library such as \link[mapview:mapview]{mapview::mapview}
+taken over the map.
 }

@@ -15,5 +15,5 @@ view_konigsberg_path(graph, pathway)
 A \code{\link[leaflet:leaflet]{leaflet::leaflet}} object
 }
 \description{
-This transforms the resulting pathway into an sf project and plots it onto a Leaflet map using \code{\link[mapview:mapview]{mapview::mapview}}
+This transforms the resulting pathway into an sf project and plots it onto a Leaflet map.
 }

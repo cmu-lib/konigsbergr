@@ -53,8 +53,7 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #' Create an sf object from a konigsberg path
 #'
 #' Generates an [sf::sf] collection of line strings representing the pathway
-#' taken over the map. Can be visualized using base plotting functions or a
-#' library such as [mapview::mapview]
+#' taken over the map.
 #'
 #' @param graph A [`konigsberg_graph`]
 #' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges`]
@@ -105,7 +104,7 @@ pathway_to_sf <- function(graph, pathway) {
 
 #' Plot bridge crossing pathway on a Leaflet map
 #'
-#' This transforms the resulting pathway into an sf project and plots it onto a Leaflet map using [`mapview::mapview`]
+#' This transforms the resulting pathway into an sf project and plots it onto a Leaflet map.
 #'
 #' @inheritParams pathway_to_sf
 #'
