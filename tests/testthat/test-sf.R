@@ -20,7 +20,7 @@ test_that("graph to sf", {
   expect_equal(nrow(boston_linestrings), ecount(boston_graph))
 
   suppressMessages({
-    boston_pathway <- cross_all_bridges(boston_graph)
+    boston_pathway <- cross_all_bridges(boston_graph, starting_node = 2688967592)
   })
 
   path_lines <- pathway_to_sf(boston_graph, boston_pathway)

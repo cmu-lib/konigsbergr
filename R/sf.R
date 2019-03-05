@@ -59,7 +59,8 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #' @param graph A [`konigsberg_graph`]
 #' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges`]
 #'
-#' @return An object.
+#' @return A list with two elements:
+#'     - `pathway` An
 #'
 #' @importFrom dplyr group_by mutate ungroup bind_cols case_when
 #' @importFrom rlang .data

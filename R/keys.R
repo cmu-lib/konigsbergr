@@ -59,6 +59,7 @@ pedestrian_highways <- function(graph) {
 #'
 #' @inheritParams way_filters
 #'
+#' @aliases bridge_filter
 #' @name bridge_filters
 NULL
 

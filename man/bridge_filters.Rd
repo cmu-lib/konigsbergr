@@ -2,6 +2,7 @@
 % Please edit documentation in R/keys.R
 \name{bridge_filters}
 \alias{bridge_filters}
+\alias{bridge_filter}
 \alias{all_bridges}
 \alias{main_bridges}
 \title{OSM Bridge filters}

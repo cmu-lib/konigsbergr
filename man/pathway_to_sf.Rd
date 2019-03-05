@@ -12,7 +12,8 @@ pathway_to_sf(graph, pathway)
 \item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link{cross_all_bridges}}}
 }
 \value{
-An object.
+A list with two elements:
+- \code{pathway} An
 }
 \description{
 Generates an \link[sf:sf]{sf::sf} collection of line strings representing the pathway

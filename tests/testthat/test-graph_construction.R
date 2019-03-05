@@ -136,3 +136,17 @@ test_that("weight by distance", {
   expect_true("distance" %in% edge_attr_names(weighted_graph))
   expect_equivalent(edge_attr(weighted_graph, "distance"), ex_dist)
 })
+
+test_that("can specify different filters", {
+  expect_message(auto_boston <- konigsberg_graph(boston, path_filter = automobile_highways))
+  expect_message(ped_boston <- konigsberg_graph(boston, path_filter = pedestrian_highways))
+  expect_false(ecount(auto_boston) == ecount(ped_boston))
+
+  expect_message(all_boston <- konigsberg_graph(boston, path_filter = automobile_highways, bridge_filter = all_bridges))
+  expect_message(main_boston <- konigsberg_graph(boston, path_filter = automobile_highways, bridge_filter = main_bridges))
+  expect_equal(ecount(all_boston), ecount(main_boston))
+  # Need to find a better data extract where these two values will actually be different
+  # expect_gt(length(unique(edge_attr(all_boston, "bridge_id"))), length(unique(edge_attr(main_boston, "bridge_id"))))
+})
+
+

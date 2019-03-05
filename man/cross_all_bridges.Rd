@@ -4,8 +4,7 @@
 \alias{cross_all_bridges}
 \title{Calculate a pathway that will cross every bridge}
 \usage{
-cross_all_bridges(graph, starting_node = vertex_attr(graph, "id", 1),
-  ...)
+cross_all_bridges(graph, starting_node = NULL, ...)
 }
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
