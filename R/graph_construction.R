@@ -166,16 +166,6 @@ reciprocal_two_way_streets <- function(graph) {
   graph <- tidygraph::bind_edges(graph, reversed_edges)
 }
 
-# Remove all isolated nodes in a graph
-#' @importFrom tidygraph as_tbl_graph activate
-remove_unreachable_nodes <- function(graph) {
-  stopifnot(inherits(graph, "tbl_graph"))
-
-  graph %>%
-    activate(nodes) %>%
-    filter(!(tidygraph::node_is_isolated()))
-}
-
 #' Keep only the biggest connected component of a graph
 #'
 #' @param graph A [`tidygraph::tbl_graph`]
