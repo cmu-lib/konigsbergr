@@ -65,7 +65,7 @@ get_kongisberger_ways <- function(src) {
 #'
 #' Creates a base graph object with the appropriate edge and vertex attributes from OSM.
 #'
-#' @param src An [`osmar::osmar`] object
+#' @param src An [`osmar::osmar`] or a [`base_konigsberg_graph`] object.
 #' @param path_filter A function that filters which Ways will be traversable in the graph. See [`way_filters`].
 #' @param bridge_filter A function that marks which Ways are bridges that need to be crossed. See [`bridge_filters`].
 #'
@@ -74,7 +74,14 @@ get_kongisberger_ways <- function(src) {
 #' @importFrom magrittr %>%
 #' @export
 konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filter = all_bridges) {
-  k_graph <- create_base_konigsberg_graph(src)
+  # If src already has the base konigsberg transform, move on immediately, otherwise apply it
+  if (inherits(src, "base_konigsberg_graph")) {
+    k_graph <- src
+  } else if (inherits(src, "osmar")) {
+    k_graph <- base_konigsberg_graph(src)
+  } else {
+    stop("src must be either an 'osmar' or a 'base_konigsberg_graph' object")
+  }
 
   message("Filtering graph to desired paths and bridges...", appendLF = FALSE)
   marked_graph <- k_graph %>%
@@ -89,10 +96,24 @@ konigsberg_graph <- function(src, path_filter = automobile_highways, bridge_filt
   marked_graph
 }
 
+#' Create an intermediate graph representation of OSM data
+#'
+#' This function is usually called by [`konigsberg_graph`]. It transforms the
+#' OSM data into a graph object and attaches necessary attributes. It is
+#' publicly exported, however, because it is an expensive operation on large
+#' datasets. If you are trying to calculate a pathway for a large city and would
+#' like to try several combinations of road and bridge filters, then you may
+#' wish to run this function yourself and save the result, then pass it on to
+#' [`konigsberg_graph`] to complete the annotation of the graph.
+#'
+#' @param src An [`osmar::osmar`] object
+#'
 #' @importFrom rlang .data
 #' @importFrom dplyr rename mutate_at left_join select
 #' @importFrom tidygraph as_tbl_graph activate
-create_base_konigsberg_graph <- function(src) {
+#'
+#' @export
+base_konigsberg_graph <- function(src) {
   stopifnot(inherits(src, "osmar"))
 
   message("Creating base graph...", appendLF = FALSE)

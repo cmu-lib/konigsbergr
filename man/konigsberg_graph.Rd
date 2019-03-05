@@ -8,7 +8,7 @@ konigsberg_graph(src, path_filter = automobile_highways,
   bridge_filter = all_bridges)
 }
 \arguments{
-\item{src}{An \code{\link[osmar:osmar]{osmar::osmar}} object}
+\item{src}{An \code{\link[osmar:osmar]{osmar::osmar}} or a \code{\link{base_konigsberg_graph}} object.}
 
 \item{path_filter}{A function that filters which Ways will be traversable in the graph. See \code{\link{way_filters}}.}
 

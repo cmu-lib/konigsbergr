@@ -31,7 +31,7 @@ test_that("extracts OSM ways", {
 })
 
 test_that("base graph construction", {
-  expect_message(base_graph <- create_base_konigsberg_graph(boston), regexp = "complete")
+  expect_message(base_graph <- base_konigsberg_graph(boston), regexp = "complete")
 
   expect_is(base_graph, "base_konigsberg_graph")
   expect_is(base_graph, "tbl_graph")
@@ -44,7 +44,7 @@ test_that("base graph construction", {
 })
 
 test_that("filter ways", {
-  suppressMessages(base_graph <- create_base_konigsberg_graph(boston))
+  suppressMessages(base_graph <- base_konigsberg_graph(boston))
 
   filtered_graph <- automobile_highways(base_graph)
   expect_true(is_connected(filtered_graph))
@@ -73,7 +73,7 @@ test_that("filter ways", {
 })
 
 test_that("mark bridges", {
-  suppressMessages(base_graph <- create_base_konigsberg_graph(boston))
+  suppressMessages(base_graph <- base_konigsberg_graph(boston))
   filtered_graph <- automobile_highways(base_graph)
 
   bridged_graph <- main_bridges(filtered_graph)
@@ -91,6 +91,19 @@ test_that("mark bridges", {
   bridge_ids <- edge_attr(mark_bridges(bridged_graph), "bridge_id")
   expect_is(bridge_ids, "numeric")
   expect_true(any(!is.na(bridge_ids)))
+})
+
+test_that("konigsberg_graph accepts appropriate args", {
+  expect_error(konigsberg_graph(iris))
+  expect_message(direct_graph <- konigsberg_graph(boston))
+  expect_message(indirect_graph <- konigsberg_graph(base_konigsberg_graph(boston)))
+
+  expect_is(direct_graph, "konigsberg_graph")
+  expect_is(indirect_graph, "konigsberg_graph")
+  expect_equal(ecount(direct_graph), ecount(indirect_graph))
+  expect_equal(vcount(direct_graph), vcount(indirect_graph))
+  expect_equal(vertex_attr_names(direct_graph), vertex_attr_names(indirect_graph))
+  expect_equal(edge_attr_names(direct_graph), edge_attr_names(indirect_graph))
 })
 
 test_that("collect edge bundles", {
