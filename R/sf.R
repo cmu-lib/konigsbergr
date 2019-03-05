@@ -60,7 +60,10 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges`]
 #'
 #' @return A list with two elements:
-#'     - `pathway` An
+#'     - `pathway` An [`sf::sf`] data frame with LINESTRING features
+#'     representing the pathway
+#'     - `terminals` An [`sf::sf`] data frame with two POINT features
+#'     representing the start and end nodes of the path.
 #'
 #' @importFrom dplyr group_by mutate ungroup bind_cols case_when
 #' @importFrom rlang .data
@@ -106,7 +109,7 @@ pathway_to_sf <- function(graph, pathway) {
 #'
 #' @inheritParams pathway_to_sf
 #'
-#' @return A [`mapview::mapview`] object
+#' @return A [`leaflet::leaflet`] object
 #'
 #' @import leaflet
 #'
@@ -124,4 +127,6 @@ view_konigsberg_path <- function(graph, pathway) {
     addCircleMarkers(data = path_sf$terminals, label = ~start, color = c("blue", "red")) %>%
     addLegend("topright", pal = cross_pal, values = ~total_times_bridge_crossed, title = "Times bridge has been crossed",
               na.label = "Non-bridge")
+
+  lf
 }

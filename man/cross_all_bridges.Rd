@@ -14,7 +14,7 @@ cross_all_bridges(graph, starting_node = NULL, ...)
 \item{...}{Additional variables passed to \code{\link[pathfinder:greedy_search]{pathfinder::greedy_search}}}
 }
 \value{
-A \code{pathfinder_path} object
+A \code{konigsberg_path} object, which inherits from the \code{pathfinder_path} object from \code{\link[pathfinder:greedy_search]{pathfinder::greedy_search}}
 }
 \description{
 Calculate a pathway that will cross every bridge

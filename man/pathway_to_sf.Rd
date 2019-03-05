@@ -13,7 +13,10 @@ pathway_to_sf(graph, pathway)
 }
 \value{
 A list with two elements:
-- \code{pathway} An
+- \code{pathway} An \code{\link[sf:sf]{sf::sf}} data frame with LINESTRING features
+representing the pathway
+- \code{terminals} An \code{\link[sf:sf]{sf::sf}} data frame with two POINT features
+representing the start and end nodes of the path.
 }
 \description{
 Generates an \link[sf:sf]{sf::sf} collection of line strings representing the pathway

@@ -12,7 +12,7 @@ view_konigsberg_path(graph, pathway)
 \item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link{cross_all_bridges}}}
 }
 \value{
-A \code{\link[mapview:mapview]{mapview::mapview}} object
+A \code{\link[leaflet:leaflet]{leaflet::leaflet}} object
 }
 \description{
 This transforms the resulting pathway into an sf project and plots it onto a Leaflet map using \code{\link[mapview:mapview]{mapview::mapview}}
