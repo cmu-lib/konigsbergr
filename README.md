@@ -25,28 +25,19 @@ devtools::install_github("dSHARP-CMU/konigsbergr")
 ## Usage
 
 Konigsbergr works with OSM data, transforming it into a graph object and
-then using the \[pathfinder\] package to traverse edges within it.
+then using the [pathfinder](https://github.com/dSHARP-CMU/pathfinder/)
+package to traverse edges within it.
 
 ``` r
 library(konigsbergr)
-#> Loading required package: geosphere
-#> Loading required package: igraph
-#> 
-#> Attaching package: 'igraph'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     decompose, spectrum
-#> The following object is masked from 'package:base':
-#> 
-#>     union
-#> Loading required package: magrittr
+```
 
+``` r
 boston_osm <- get_osm_bbox(xmin = -71.1383,
                            xmax = -71.1132,
                            ymin = 42.3592,
                            ymax = 42.3754)
-#> Downloading...
-#> complete!
+#> Downloading...complete!
 #> Reading XML...complete!
 #> Downloaded an OSM extract with 22939 nodes and 2809 ways.
 boston_osm
@@ -63,4 +54,4 @@ boston_pathway <- cross_all_bridges(boston_graph)
 view_konigsberg_path(boston_graph, boston_pathway)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->

@@ -90,3 +90,5 @@ When trying to run this over a large geographic extent, I recommend using an orc
 [tidygraph]: https://cran.r-project.org/package=tidygraph
 
 [drake]: https://cran.r-project.org/package=drake
+
+[pathfinder]: https://github.com/dSHARP-CMU/pathfinder/

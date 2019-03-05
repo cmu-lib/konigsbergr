@@ -8,8 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/README-"
 )
 ```
 
@@ -33,9 +32,11 @@ devtools::install_github("dSHARP-CMU/konigsbergr")
 
 Konigsbergr works with OSM data, transforming it into a graph object and then using the [pathfinder] package to traverse edges within it.
 
-```{r}
+```{r, message = FALSE}
 library(konigsbergr)
+```
 
+```{r}
 boston_osm <- get_osm_bbox(xmin = -71.1383,
                            xmax = -71.1132,
                            ymin = 42.3592,
@@ -48,3 +49,5 @@ boston_pathway <- cross_all_bridges(boston_graph)
 
 view_konigsberg_path(boston_graph, boston_pathway)
 ```
+
+[pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
