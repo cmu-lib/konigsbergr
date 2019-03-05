@@ -120,7 +120,7 @@ view_konigsberg_path <- function(graph, pathway) {
   cross_pal <- colorFactor(c("#2B83BA", "#ABDDA4", "#FDAE61"),
                            path_sf$pathway$total_times_bridge_crossed)
 
-  lf <- leaflet(path_sf$pathway, width = "100%", height = "800px") %>%
+  lf <- leaflet(path_sf$pathway, width = "100%", height = "600px") %>%
     addProviderTiles(leaflet::providers$CartoDB.Positron) %>%
     addPolylines(opacity = 0.6, color = ~cross_pal(total_times_bridge_crossed),
                  label = ~label, popup = ~glue::glue("<a href='{osm_url}'>{osm_url}</a>")) %>%
