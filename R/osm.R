@@ -18,7 +18,7 @@
 get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.de") {
   tfile <- tempfile()
   message("Downloading...", appendLF = FALSE)
-  res <- httr::GET(glue::glue("{server}/api/map?bbox={xmin},{ymin},{xmax},{ymax}"), httr::write_disk(tfile), httr::progress())
+  res <- httr::GET(glue::glue("{server}/api/map?bbox={xmin},{ymin},{xmax},{ymax}"), httr::write_disk(tfile))
   message("complete!")
 
   message("Reading XML...", appendLF = FALSE)
