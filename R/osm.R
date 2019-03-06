@@ -22,7 +22,7 @@ get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.
   message("complete!")
 
   message("Reading XML...", appendLF = FALSE)
-  osm_res <- osmar::get_osm(osmar::complete_file(), source = osmar::osmsource_file(tfile))
+  osm_res <- get_osm_file(tfile)
   message("complete!")
 
   assertthat::assert_that(dim(osm_res)[1] > 0, msg = "There are no nodes in the downloaded OSM. Check that you have supplied a valid bounding box.")
@@ -33,4 +33,11 @@ get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.
   unlink(tfile)
 
   osm_res
+}
+
+#' @describeIn get_osm_bbox Read in OSM data from an XML file
+#' @param file Filepath for an OSM XML file
+#' @export
+get_osm_file <- function(file) {
+  osmar::get_osm(osmar::complete_file(), source = osmar::osmsource_file(file))
 }

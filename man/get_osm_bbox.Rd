@@ -2,9 +2,12 @@
 % Please edit documentation in R/osm.R
 \name{get_osm_bbox}
 \alias{get_osm_bbox}
+\alias{get_osm_file}
 \title{Download OSM data from a specified lon/lat bounding box}
 \usage{
 get_osm_bbox(xmin, xmax, ymin, ymax, server = "https://overpass-api.de")
+
+get_osm_file(file)
 }
 \arguments{
 \item{xmin}{Numeric. Minimum longitude}
@@ -16,6 +19,8 @@ get_osm_bbox(xmin, xmax, ymin, ymax, server = "https://overpass-api.de")
 \item{ymax}{Numeric. Maximum latitude}
 
 \item{server}{Character. Hostname of an \href{http://overpass-api.de}{Overpass API server} Defaults to \url{https://overpass-api.de} although you may specify a different hostname.}
+
+\item{file}{Filepath for an OSM XML file}
 }
 \value{
 An \code{\link{osmar}} object.
@@ -23,6 +28,11 @@ An \code{\link{osmar}} object.
 \description{
 Downloads OSM data from an \href{http://overpass-api.de}{Overpass API server} and reads it into an \code{\link{osmar}} object.
 }
+\section{Functions}{
+\itemize{
+\item \code{get_osm_file}: Read in OSM data from an XML file
+}}
+
 \seealso{
 \code{\link[osmar:osmsource_api]{osmar::osmsource_api}} which iplements the same function but has stricter controls on the size that can be downloaded.
 }

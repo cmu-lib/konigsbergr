@@ -1,7 +1,7 @@
 context("test-osm")
 
 test_that("osm bbox returns a correct osmar object", {
-  skip("Skipping OSM download tests")
+  skip_on_cran()
   xmin <- -73.11673
   xmax <- -73.10871
   ymin <- 42.69575
