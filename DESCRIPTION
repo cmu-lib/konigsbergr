@@ -32,14 +32,16 @@ Imports:
     sf,
     tibble,
     tidygraph,
-    tidyr
+    tidyr,
+    bigosm (>= 0.0.0.9000)
 Suggests: 
     covr,
     knitr,
     rmarkdown,
     testthat
-Remotes: 
-    dsharp-cmu/pathfinder
+Remotes:  
+    dsharp-cmu/pathfinder,
+    dSHARP-CMU/bigosm
 Encoding: UTF-8
 Language: en-US
 LazyData: true

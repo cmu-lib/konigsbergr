@@ -39,5 +39,5 @@ get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.
 #' @param file Filepath for an OSM XML file
 #' @export
 get_osm_file <- function(file) {
-  osmar::get_osm(osmar::complete_file(), source = osmar::osmsource_file(file))
+  bigosm::read_big_osm(file, way_keys = "highway")
 }
