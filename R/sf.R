@@ -1,10 +1,10 @@
 #' Convert an igraph object with lon/lat attributes to an SF linestring collection
 #'
-#' @param graph An [`igraph::igraph`] object
+#' @param graph An [`igraph`][igraph::igraph] object
 #' @param v_lat Numeric. Latitude values for each vertex
 #' @param v_lon Numeric. Longitude values for each vertex
 #'
-#' @return A named list with an `edges` and a `nodes` [`sf::sfc`]
+#' @return A named list with an `edges` and a `nodes` [`sfc`][sf::sfc] object.
 #'
 #' @export
 graph_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
@@ -20,7 +20,7 @@ graph_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
   )
 }
 
-#' @describeIn graph_to_sf Return only the edges as [`sf::st_linestring`]
+#' @describeIn graph_to_sf Return only the edges as an [`st_linestring`][sf::st_linestring] object
 #' @export
 edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   edges <- igraph::as_data_frame(graph, "edges")
@@ -39,7 +39,7 @@ edges_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
   edges
 }
 
-#' @describeIn graph_to_sf Return only the nodes as [`sf::st_point`]
+#' @describeIn graph_to_sf Return only the nodes as an [`st_point`][sf::st_point] object
 #' @export
 nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon = igraph::vertex_attr(graph, "lon")) {
   nodes <- igraph::as_data_frame(graph, "vertices")
@@ -52,7 +52,7 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 
 #' Create an sf object from a konigsberg path
 #'
-#' Generates an [sf::sf] collection of line strings representing the pathway
+#' Generates an [`sf`][sf::sf] collection of line strings representing the pathway
 #' taken over the map.
 #'
 #' @param graph A [`konigsberg_graph`]
@@ -108,7 +108,7 @@ pathway_to_sf <- function(graph, pathway) {
 #'
 #' @inheritParams pathway_to_sf
 #'
-#' @return A [`leaflet::leaflet`] object
+#' @return A [`leaflet`][leaflet::leaflet] object
 #'
 #' @import leaflet
 #'

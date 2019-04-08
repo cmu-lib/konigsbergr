@@ -16,22 +16,22 @@ nodes_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
   v_lon = igraph::vertex_attr(graph, "lon"))
 }
 \arguments{
-\item{graph}{An \code{\link[igraph:igraph]{igraph::igraph}} object}
+\item{graph}{An \code{\link[igraph:igraph]{igraph}} object}
 
 \item{v_lat}{Numeric. Latitude values for each vertex}
 
 \item{v_lon}{Numeric. Longitude values for each vertex}
 }
 \value{
-A named list with an \code{edges} and a \code{nodes} \code{\link[sf:sfc]{sf::sfc}}
+A named list with an \code{edges} and a \code{nodes} \code{\link[sf:sfc]{sfc}} object.
 }
 \description{
 Convert an igraph object with lon/lat attributes to an SF linestring collection
 }
 \section{Functions}{
 \itemize{
-\item \code{edges_to_sf}: Return only the edges as \code{\link[sf:st_linestring]{sf::st_linestring}}
+\item \code{edges_to_sf}: Return only the edges as an \code{\link[sf:st_linestring]{st_linestring}} object
 
-\item \code{nodes_to_sf}: Return only the nodes as \code{\link[sf:st_point]{sf::st_point}}
+\item \code{nodes_to_sf}: Return only the nodes as an \code{\link[sf:st_point]{st_point}} object
 }}
 

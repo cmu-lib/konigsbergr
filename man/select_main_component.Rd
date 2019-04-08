@@ -7,10 +7,10 @@
 select_main_component(graph)
 }
 \arguments{
-\item{graph}{A \code{\link[tidygraph:tbl_graph]{tidygraph::tbl_graph}}}
+\item{graph}{A \code{\link[tidygraph:tbl_graph]{tbl_graph}} object}
 }
 \value{
-A \code{\link[tidygraph:tbl_graph]{tidygraph::tbl_graph}} with one component
+A \code{\link[tidygraph:tbl_graph]{tbl_graph}} with one component
 }
 \description{
 Keep only the biggest connected component of a graph

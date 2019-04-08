@@ -6,7 +6,7 @@ osm_edge_tag_keys <- function() c("access", "highway", "bicycle", "foot", "bridg
 #'
 #' A variety of presets that will
 #'
-#' @param graph An [`konigsberg_graph`] object.
+#' @param graph A [`konigsberg_graph`] object.
 #'
 #' @return An integer vector of OSM Way ids.
 #'

@@ -2,9 +2,9 @@
 
 #' Download OSM data from a specified lon/lat bounding box
 #'
-#' Downloads OSM data from an [Overpass API server](http://overpass-api.de) and reads it into an [`osmar`] object.
+#' Downloads OSM data from an [Overpass API server](http://overpass-api.de) and reads it into an [`osmar`][osmar::osmar] object.
 #'
-#' @seealso [`osmar::osmsource_api`] which iplements the same function but has stricter controls on the size that can be downloaded.
+#' @seealso [`osmsource_api()`][osmar::osmsource_api] which implements the same function but has stricter controls on the size that can be downloaded.
 #'
 #' @param xmin Numeric. Minimum longitude
 #' @param xmax Numeric. Maximum longitude
@@ -13,7 +13,7 @@
 #'
 #' @param server Character. Hostname of an [Overpass API server](http://overpass-api.de) Defaults to <https://overpass-api.de> although you may specify a different hostname.
 #'
-#' @return An [`osmar`] object.
+#' @return An [`osmar`][osmar::osmar] object.
 #' @export
 get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.de") {
   tfile <- tempfile()

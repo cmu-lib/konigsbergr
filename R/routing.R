@@ -2,9 +2,9 @@
 #'
 #' @param graph A [`konigsberg_graph`]
 #' @param starting_node An integer specifying the OSM id of the starting node. Defaults to the first vertex in `graph`.
-#' @param ... Additional variables passed to [`pathfinder::greedy_search`]
+#' @param ... Additional variables passed to [`greedy_search()`][pathfinder::greedy_search]
 #'
-#' @return A `konigsberg_path` object, which inherits from the `pathfinder_path` object from [`pathfinder::greedy_search`]
+#' @return A `konigsberg_path` object, which inherits from the `pathfinder_path` object from [`greedy_search()`][pathfinder::greedy_search]
 #'
 #' @export
 cross_all_bridges <- function(graph, starting_node = NULL, ...) {

@@ -11,7 +11,7 @@ automobile_highways(graph)
 pedestrian_highways(graph)
 }
 \arguments{
-\item{graph}{An \code{\link{konigsberg_graph}} object.}
+\item{graph}{A \code{\link{konigsberg_graph}} object.}
 }
 \value{
 An integer vector of OSM Way ids.

@@ -23,10 +23,10 @@ get_osm_file(file)
 \item{file}{Filepath for an OSM XML file}
 }
 \value{
-An \code{\link{osmar}} object.
+An \code{\link[osmar:osmar]{osmar}} object.
 }
 \description{
-Downloads OSM data from an \href{http://overpass-api.de}{Overpass API server} and reads it into an \code{\link{osmar}} object.
+Downloads OSM data from an \href{http://overpass-api.de}{Overpass API server} and reads it into an \code{\link[osmar:osmar]{osmar}} object.
 }
 \section{Functions}{
 \itemize{
@@ -34,5 +34,5 @@ Downloads OSM data from an \href{http://overpass-api.de}{Overpass API server} an
 }}
 
 \seealso{
-\code{\link[osmar:osmsource_api]{osmar::osmsource_api}} which iplements the same function but has stricter controls on the size that can be downloaded.
+\code{\link[osmar:osmsource_api]{osmsource_api()}} which implements the same function but has stricter controls on the size that can be downloaded.
 }

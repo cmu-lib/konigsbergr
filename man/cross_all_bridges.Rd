@@ -11,10 +11,10 @@ cross_all_bridges(graph, starting_node = NULL, ...)
 
 \item{starting_node}{An integer specifying the OSM id of the starting node. Defaults to the first vertex in \code{graph}.}
 
-\item{...}{Additional variables passed to \code{\link[pathfinder:greedy_search]{pathfinder::greedy_search}}}
+\item{...}{Additional variables passed to \code{\link[pathfinder:greedy_search]{greedy_search()}}}
 }
 \value{
-A \code{konigsberg_path} object, which inherits from the \code{pathfinder_path} object from \code{\link[pathfinder:greedy_search]{pathfinder::greedy_search}}
+A \code{konigsberg_path} object, which inherits from the \code{pathfinder_path} object from \code{\link[pathfinder:greedy_search]{greedy_search()}}
 }
 \description{
 Calculate a pathway that will cross every bridge

@@ -19,6 +19,6 @@ representing the pathway
 representing the start and end nodes of the path.
 }
 \description{
-Generates an \link[sf:sf]{sf::sf} collection of line strings representing the pathway
+Generates an \code{\link[sf:sf]{sf}} collection of line strings representing the pathway
 taken over the map.
 }

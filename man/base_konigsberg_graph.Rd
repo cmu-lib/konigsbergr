@@ -7,14 +7,14 @@
 base_konigsberg_graph(src)
 }
 \arguments{
-\item{src}{An \code{\link[osmar:osmar]{osmar::osmar}} object}
+\item{src}{An \code{\link[osmar:osmar]{osmar}} object}
 }
 \description{
-This function is usually called by \code{\link{konigsberg_graph}}. It transforms the
+This function is usually called by \code{\link[=konigsberg_graph]{konigsberg_graph()}}. It transforms the
 OSM data into a graph object and attaches necessary attributes. It is
 publicly exported, however, because it is an expensive operation on large
 datasets. If you are trying to calculate a pathway for a large city and would
 like to try several combinations of road and bridge filters, then you may
 wish to run this function yourself and save the result, then pass it on to
-\code{\link{konigsberg_graph}} to complete the annotation of the graph.
+\code{\link[=konigsberg_graph]{konigsberg_graph()}} to complete the annotation of the graph.
 }

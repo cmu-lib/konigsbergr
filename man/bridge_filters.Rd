@@ -12,7 +12,7 @@ all_bridges(graph)
 main_bridges(graph)
 }
 \arguments{
-\item{graph}{An \code{\link{konigsberg_graph}} object.}
+\item{graph}{A \code{\link{konigsberg_graph}} object.}
 }
 \description{
 Preset filtering functions to define which Ways in the OSM data will be counted as bridges to be crossed
