@@ -21,11 +21,11 @@ library(osmar)
 
 In 1736, mathematician Leonard Euler proved it was impossible to walk through the German city of Königsberg crossing each of the city’s seven bridges exactly once. His work, famously dubbed the “Bridges of Königsberg” problem, laid the foundation for graph theory and network analysis, and foreshadowed the invention of topology. 
 
-`kongisbergr` is a playful experiment that allows you to find pathways across the bridges in your own city and town, relying on the data from [OpenStreetMap][osm].
+`kongisbergr` is a playful experiment that allows you to find pathways across the bridges in your own city or town, relying on the data from [OpenStreetMap][osm].
 
 ## Getting Map Data
 
-First, we need to get map data from OSM. `kongisbergr` takes data extracts produced by the [osmar] package, which provides several options for calling out to APIs or to loading files from disk.
+First, we need to get map data from OSM. `kongisbergr` takes data extracts produced by the [osmar] package, which provides several options for calling out to APIs or loading files from disk.
 Konigsbergr provides a wrapper function `get_osm_bbox` that lets you download small-sized extracts of data from OSM by specifying minimum and maximum latitudes and longitudes.
 If you are trying to do an entire city, however, you may want to download the OSM XML as a separate file so that you can persist it to disk. Then, you can read it in manually using osmar's utility functions.
 
@@ -74,7 +74,13 @@ view_konigsberg_path(boston_graph, boston_path_2)
 
 ### Note when working with very large data
 
-In addition to filtering and marking bridges for crossing, `konigsberg_graph` also wraps the core fucntion that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the udnerlying function `create_base_konigsberg_graph`. This will perform the initial conversion before applying the `path_filter` and `bridge_filter` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
+Very large OSM exports can cause memory errors when using the original [osmar] package.
+The [bigosm] package can read in much larger exports (e.g. the 2 GB export for New York City) and also proactively filter the R representation down to just roads and bridges.
+Even with this filtering, though, be aware that trying to do a graph construction and traversal for a large city can still take tens of minutes for graphs of NYC-scale.
+
+[bigosm]: https://github.com/dSHARP-CMU/bigosm
+
+In addition to filtering and marking bridges for crossing, `konigsberg_graph` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the udnerlying function `create_base_konigsberg_graph`. This will perform the initial conversion before applying the `path_filter` and `bridge_filter` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
 
 ```{r}
 base_boston_graph <- base_konigsberg_graph(boston)
