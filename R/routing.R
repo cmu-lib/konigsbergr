@@ -29,6 +29,7 @@ cross_all_bridges <- function(graph, starting_node = NULL, ...) {
 #' @param required_bridges The [Way](https://wiki.openstreetmap.org/wiki/Way) or
 #'   [Relation](https://wiki.openstreetmap.org/wiki/Relation) ids of bridges
 #'   that must be crossed.
+#' @export
 cross_specific_bridges <- function(graph, starting_node = NULL, required_bridges = NULL, ...) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   bridge_bundles <- lapply(required_bridges, function(x) which(x == edge_attr(graph, "bridge_id")))
