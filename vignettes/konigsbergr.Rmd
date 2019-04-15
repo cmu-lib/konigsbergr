@@ -65,7 +65,7 @@ boston_graph
 
 ## Charting and visualizing a pathway
 
-Pathfinding is accomplished using the [pathfinder] package, which is desinged to work on graphs of any kind. Konigsberg provides the `cross_all_bridges()` function, which will start from the first node in the network or from an OSM node ID that you specify.
+Pathfinding is accomplished using the [pathfinder] package, which is designed to work on graphs of any kind. konigsbergr provides the `cross_all_bridges()` function, which will start from the first node in the network or from an OSM node ID that you specify.
 
 ```{r}
 boston_path <- cross_all_bridges(boston_graph)
@@ -81,7 +81,7 @@ boston_path_2 <- cross_all_bridges(boston_graph, starting_node = 2688967592)
 view_konigsberg_path(boston_graph, boston_path_2)
 ```
 
-### Note when working with very large data
+## Working with very large data
 
 Very large OSM exports can cause memory errors when using the original [osmar] package.
 The [bigosm] package can read in much larger exports (e.g. New York City is about 2 GB of XML!) and also proactively filter the R representation down to just roads and bridges.
@@ -90,7 +90,7 @@ Even with this filtering, though, be aware that trying to do a graph constructio
 
 [bigosm]: https://github.com/dSHARP-CMU/bigosm
 
-In addition to filtering and marking bridges for crossing, `konigsberg_graph()` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the udnerlying function `create_base_konigsberg_graph()`. This will perform the initial conversion before applying the `path_filter()` and `bridge_filter()` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
+In addition to filtering and marking bridges for crossing, `konigsberg_graph()` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the underlying function `create_base_konigsberg_graph()`. This will perform the initial conversion before applying the `path_filter()` and `bridge_filter()` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
 
 ```{r}
 base_boston_graph <- base_konigsberg_graph(boston)
