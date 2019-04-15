@@ -21,6 +21,7 @@ Depends:
     R (>= 3.0.1)
 Imports: 
     assertthat,
+    bigosm (>= 0.0.0.9000),
     dplyr,
     glue,
     httr,
@@ -32,19 +33,19 @@ Imports:
     sf,
     tibble,
     tidygraph,
-    tidyr,
-    bigosm (>= 0.0.0.9000)
+    tidyr
 Suggests: 
     covr,
     knitr,
     rmarkdown,
     testthat
-Remotes:  
-    dsharp-cmu/pathfinder,
-    dSHARP-CMU/bigosm
+VignetteBuilder: 
+    knitr
+Remotes: 
+    dSHARP-CMU/bigosm,
+    dSHARP-CMU/pathfinder
 Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-VignetteBuilder: knitr
