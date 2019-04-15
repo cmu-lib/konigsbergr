@@ -4,7 +4,7 @@ author: "Matthew Lincoln"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Crossing Bridges with Konigsbergr}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +26,7 @@ In 1736, mathematician Leonard Euler proved it was impossible to walk through th
 ## Getting Map Data
 
 First, we need to get map data from OSM. `kongisbergr` takes data extracts produced by the [osmar] package, which provides several options for calling out to APIs or loading files from disk.
-Konigsbergr provides a wrapper function `get_osm_bbox` that lets you download small-sized extracts of data from OSM by specifying minimum and maximum latitudes and longitudes.
+Konigsbergr provides a wrapper function `get_osm_bbox()` that lets you download small-sized extracts of data from OSM by specifying minimum and maximum latitudes and longitudes.
 If you are trying to do an entire city, however, you may want to download the OSM XML as a separate file so that you can persist it to disk. Then, you can read it in manually using osmar's utility functions.
 
 ```{r eval = FALSE}
@@ -44,7 +44,7 @@ boston
 
 We need to convert the OSM data into a network object and attach select attributes to that network from the original attributes and tags.
 
-The top-level function `konigsberg_graph` takes an `osmar` object like `boston` and returns a [tidygraph] object. There are two options for modifying the way that this network is formed.
+The top-level function `konigsberg_graph()` takes an `osmar` object like `boston` and returns a [tidygraph] object. There are two options for modifying the way that this network is formed.
 
 1. Which paths are crossable? Passing `automobile_highways` versus `pedestrian_highways` will alter the number and kinds of edges in the resulting graph.
 2. Which paths are considered bridges that must be crossed? In OSM, many minor roads such as highway on- and off-ramps are labeled as bridges. The default bridge filter, `all_bridges`, will mark all of these as bridges that the pathway must cross. However, you may wish to exclude those minor bridges, in which case you may pass `main_bridges` instead.
@@ -56,14 +56,14 @@ boston_graph
 
 ## Charting and visualizing a pathway
 
-Pathfinding is accomplished using the [pathfinder] package, which is desinged to work on graphs of any kind. Konigsberg provides the `cross_all_bridges` function, which will start from the first node in the network or from an OSM node ID that you specify.
+Pathfinding is accomplished using the [pathfinder] package, which is desinged to work on graphs of any kind. Konigsberg provides the `cross_all_bridges()` function, which will start from the first node in the network or from an OSM node ID that you specify.
 
 ```{r}
 boston_path <- cross_all_bridges(boston_graph)
 view_konigsberg_path(boston_graph, boston_path)
 ```
 
-The `greedy_search` function implemented by [pathfinder] is not particularly creative, so depending on how you have defined the limits of your map data you may find that the path needs to cross back over a bridge, or gets trapped (e.g. behind a one-way street) and cannot complete the entire circuit.
+The `greedy_search()` function implemented by [pathfinder] is not particularly creative, so depending on how you have defined the limits of your map data you may find that the path needs to cross back over a bridge, or gets trapped (e.g. behind a one-way street) and cannot complete the entire circuit.
 Try specifying alternate start points for the pathway to see if you can find a more efficient route:
 
 ```{r}
@@ -75,12 +75,13 @@ view_konigsberg_path(boston_graph, boston_path_2)
 ### Note when working with very large data
 
 Very large OSM exports can cause memory errors when using the original [osmar] package.
-The [bigosm] package can read in much larger exports (e.g. the 2 GB export for New York City) and also proactively filter the R representation down to just roads and bridges.
+The [bigosm] package can read in much larger exports (e.g. New York City is about 2 GB of XML!) and also proactively filter the R representation down to just roads and bridges.
+konigsbergr will automatically use this package if you call `get_osm_bbox()`.
 Even with this filtering, though, be aware that trying to do a graph construction and traversal for a large city can still take tens of minutes for graphs of NYC-scale.
 
 [bigosm]: https://github.com/dSHARP-CMU/bigosm
 
-In addition to filtering and marking bridges for crossing, `konigsberg_graph` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the udnerlying function `create_base_konigsberg_graph`. This will perform the initial conversion before applying the `path_filter` and `bridge_filter` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
+In addition to filtering and marking bridges for crossing, `konigsberg_graph()` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the udnerlying function `create_base_konigsberg_graph()`. This will perform the initial conversion before applying the `path_filter()` and `bridge_filter()` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
 
 ```{r}
 base_boston_graph <- base_konigsberg_graph(boston)
