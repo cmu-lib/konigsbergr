@@ -11,6 +11,8 @@
 #' @param ymin Numeric. Minimum latitude
 #' @param ymax Numeric. Maximum latitude
 #'
+#' @import osmar
+#'
 #' @param server Character. Hostname of an [Overpass API server](http://overpass-api.de) Defaults to <https://overpass-api.de> although you may specify a different hostname.
 #'
 #' @return An [`osmar`][osmar::osmar] object.
