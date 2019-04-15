@@ -26,7 +26,7 @@ devtools::install_github("dSHARP-CMU/konigsbergr")
 ## Usage
 
 *For the complete manual, see [the package
-vignette](dsharp-cmu.github.io/konigsbergr).*
+vignette](https://dsharp-cmu.github.io/konigsbergr/articles/konigsbergr.html).*
 
 Konigsbergr works with OSM data, transforming it into a graph object and
 then using the [pathfinder](https://github.com/dSHARP-CMU/pathfinder/)
