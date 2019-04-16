@@ -88,3 +88,16 @@ view_konigsberg_path(boston_graph, boston_pathway)
 ```
 
 ![](man/figures/README-boston-1.png)<!-- -->
+
+## Context
+
+This package is one of several originally developed by [Matthew
+Lincoln](https:://github.com/mdlincoln) for use by Carnegie Mellon
+University’s [“Bridges of Pittsburgh”](http://bridgesofpittsburgh.net/)
+project:
+
+  - [konigsberger](https://dsharp-cmu.github.io/konigsbergr/index.html)
+    (end-user package)
+      - [pathfinder](https://github.com/dSHARP-CMU/pathfinder/)
+      - [bigosm](https://github.com/dSHARP-CMU/bigosm)
+      - [simplygraph](https://github.com/dSHARP-CMU/simplygraph)
