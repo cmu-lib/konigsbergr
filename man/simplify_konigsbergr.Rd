@@ -7,7 +7,7 @@
 simplify_konigsbergr(graph, preserve_bridges = TRUE)
 }
 \arguments{
-\item{graph}{A Konigsbergr graph created from \code{\link[=konigsbergr_graph]{konigsbergr_graph()}}.}
+\item{graph}{A Konigsbergr graph created from \code{\link[=konigsberg_graph]{konigsberg_graph()}}.}
 
 \item{preserve_bridges}{Boolean. Preserve full bridge geometry?}
 }

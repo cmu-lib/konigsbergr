@@ -14,7 +14,7 @@
 #'   [simplify_topology()][simplygraph::simplify_topology] function from the
 #'   simplygraph package.
 #'
-#' @param graph A Konigsbergr graph created from [konigsbergr_graph()].
+#' @param graph A Konigsbergr graph created from [konigsberg_graph()].
 #' @param preserve_bridges Boolean. Preserve full bridge geometry?
 #'
 #' @return A simple, undirected [`igraph`][igraph::igraph] object.
