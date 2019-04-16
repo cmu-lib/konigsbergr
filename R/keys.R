@@ -61,7 +61,8 @@ pedestrian_highways <- function(graph) {
 
 #' OSM Bridge filters
 #'
-#' Preset filtering functions to define which Ways in the OSM data will be counted as bridges to be crossed
+#' Preset filtering functions to define which Ways in the OSM data will be
+#' counted as bridges to be crossed.
 #'
 #' @inheritParams way_filters
 #'
