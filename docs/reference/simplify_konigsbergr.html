@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>OSM Way filters — way_filters • konigsbergr</title>
+<title>Simplify a Konigsbergr Graph for Network Analysis — simplify_konigsbergr • konigsbergr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="OSM Way filters — way_filters" />
+<meta property="og:title" content="Simplify a Konigsbergr Graph for Network Analysis — simplify_konigsbergr" />
 
-<meta property="og:description" content="A variety of presets that will" />
+<meta property="og:description" content="This function simplifies a Konigsbergr graph by reducing the
+graph to a simpler representation where intersections are directly connected
+by straight edges." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,42 +116,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>OSM Way filters</h1>
-    <small class="dont-index">Source: <a href='https://github.com/dSHARP-CMU/konigsbergr/blob/master/R/keys.R'><code>R/keys.R</code></a></small>
-    <div class="hidden name"><code>way_filters.Rd</code></div>
+    <h1>Simplify a Konigsbergr Graph for Network Analysis</h1>
+    <small class="dont-index">Source: <a href='https://github.com/dSHARP-CMU/konigsbergr/blob/master/R/networking.R'><code>R/networking.R</code></a></small>
+    <div class="hidden name"><code>simplify_konigsbergr.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A variety of presets that will</p>
+    <p>This function simplifies a Konigsbergr graph by reducing the
+graph to a simpler representation where intersections are directly connected
+by straight edges.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>automobile_highways</span>(<span class='no'>graph</span>)
-
-<span class='fu'>pedestrian_highways</span>(<span class='no'>graph</span>)</pre>
+    <pre class="usage"><span class='fu'>simplify_konigsbergr</span>(<span class='no'>graph</span>, <span class='kw'>preserve_bridges</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>graph</th>
-      <td><p>A <code><a href='konigsberg_graph.html'>konigsberg_graph</a></code> object.</p></td>
+      <td><p>A Konigsbergr graph created from <code>konigsbergr_graph()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>preserve_bridges</th>
+      <td><p>Boolean. Preserve full bridge geometry?</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An integer vector of OSM Way ids.</p>
+    <p>A simple, undirected <code><a href='https://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> object.</p>
     
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <ul>
-<li><p><code>automobile_highways</code>: Ways that are navigable in an automobile</p></li>
-<li><p><code>pedestrian_highways</code>: Ways that are navigable by foot</p></li>
-</ul>
+    <p>This reduces to a simple, undirected graph, so note that the distinction
+between two-way and one-way roads will be discarded. The sum of the total
+distances of the removed edges are maintained, however. The real-world road
+distance in meters along an edge will be saved in the <code>distance</code> edge
+attribute of the new graph.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>This function relies on the
+<a href='https://www.rdocumentation.org/packages/simplygraph/topics/simplify_topology'>simplify_topology()</a> function from the
+simplygraph package.</p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>boston_konigsbergr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='konigsberg_graph.html'>konigsberg_graph</a></span>(<span class='no'>boston</span>)
+
+<span class='no'>boston_sf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='graph_to_sf.html'>graph_to_sf</a></span>(<span class='no'>boston_konigsbergr</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>boston_sf</span>$<span class='no'>edges</span>[<span class='st'>"geometry"</span>])
+
+<span class='no'>simple_boston</span> <span class='kw'>&lt;-</span> <span class='fu'>simplify_konigsbergr</span>(<span class='no'>boston_konigsbergr</span>)
+<span class='no'>simple_boston_sf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='graph_to_sf.html'>graph_to_sf</a></span>(<span class='no'>simple_boston</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>simple_boston_sf</span>$<span class='no'>edges</span>[<span class='st'>"geometry"</span>])
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -158,8 +182,12 @@
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#functions">Functions</a></li>
-          </ul>
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

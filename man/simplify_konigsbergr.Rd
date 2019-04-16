@@ -20,20 +20,11 @@ graph to a simpler representation where intersections are directly connected
 by straight edges.
 }
 \details{
-Raw Konigsbergr graphs contain a huge number of nodes in order to accurately
-describe the geometry of curved roads. For many network analyses, however,
-road curvature is unimportant compared to the toplogocal layout of
-intersections. Simplifying OSM-based road graphs like this can reduce the
-size of a graph by up to 90%, greatly speeding many analyses. The additional
-nodes needed to accuratley encode complete spatial information can interfere
-with some common calculations such as \link[igraph:closeness]{closeness()}, so
-simplifying the graph like this can also return more accurate metrics.
-
-Beware that this simplifcation also reduces the data to a simple, undirected
-graph, so note that the distinction between two-way and one-way roads will be
-discarded. The sum of the total distances of the removed edges are
-maintained, however, so the real-world distance in meters of an edge will be
-saved in the \code{distance} edge attribute of the new graph.
+This reduces to a simple, undirected graph, so note that the distinction
+between two-way and one-way roads will be discarded. The sum of the total
+distances of the removed edges are maintained, however. The real-world road
+distance in meters along an edge will be saved in the \code{distance} edge
+attribute of the new graph.
 }
 \examples{
 \dontrun{
