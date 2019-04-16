@@ -31,6 +31,7 @@ Imports:
     purrr,
     rlang,
     sf,
+    simplygraph (>= 0.0.0.9000),
     tibble,
     tidygraph,
     tidyr
@@ -43,7 +44,8 @@ VignetteBuilder:
     knitr
 Remotes: 
     dSHARP-CMU/bigosm,
-    dSHARP-CMU/pathfinder
+    dSHARP-CMU/pathfinder,
+    dSHARP-CMU/simplygraph
 Encoding: UTF-8
 Language: en-US
 LazyData: true
