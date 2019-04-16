@@ -29,6 +29,10 @@ First, we need to get map data from OSM. `kongisbergr` takes data extracts produ
 
 An easy way to get an OSM data extract is to go to <https://openstreetmap.org>, navigate to the region whose data you want to download, and then use the "Export" tab to select a bounding box. Click the "Overpass API" link to begin downloading a file.
 
+```{r osm-export}
+knitr::include_graphics("osm_export.jpg")
+```
+
 You may then read the file into R:
 
 ```{r eval = FALSE}
