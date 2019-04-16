@@ -32,7 +32,9 @@
 
 <meta property="og:title" content="OSM Way filters — way_filters" />
 
-<meta property="og:description" content="A variety of presets that will" />
+<meta property="og:description" content="A variety of presets for filtering down a full OSM dataset to the ways that
+describe transportation. This primarily filters on the value of the
+highway tag's value." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,7 +123,9 @@
 
     <div class="ref-description">
     
-    <p>A variety of presets that will</p>
+    <p>A variety of presets for filtering down a full OSM dataset to the ways that
+describe transportation. This primarily filters on the value of the
+<a href='https://wiki.openstreetmap.org/wiki/Key:highway'>highway</a> tag's value.</p>
     
     </div>
 
@@ -149,6 +153,12 @@
 <li><p><code>pedestrian_highways</code>: Ways that are navigable by foot</p></li>
 </ul>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>When using <code><a href='get_osm_bbox.html'>get_osm_file()</a></code>, note that the underlying
+<a href='https://www.rdocumentation.org/packages/bigosm/topics/read_big_osm'>read_big_osm()</a> function automatically subsets the
+network to Ways that contain a <code>highway</code> key.</p></div>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -159,6 +169,8 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#functions">Functions</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>

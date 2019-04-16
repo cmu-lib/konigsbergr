@@ -30,7 +30,8 @@ Downloads OSM data from an \href{http://overpass-api.de}{Overpass API server} an
 }
 \section{Functions}{
 \itemize{
-\item \code{get_osm_file}: Read in OSM data from an XML file
+\item \code{get_osm_file}: Read in OSM data from an XML file. \code{\link[=get_osm_bbox]{get_osm_bbox()}}
+calls this function once it downloads the raw XML file.
 }}
 
 \seealso{

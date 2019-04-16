@@ -4,7 +4,7 @@
 \alias{traverse_graph}
 \alias{cross_all_bridges}
 \alias{cross_specific_bridges}
-\title{Calculate a pathways crossing bridges in konigsberg_graphs}
+\title{Calculate pathways across bridges}
 \usage{
 cross_all_bridges(graph, starting_node = NULL, ...)
 
@@ -14,7 +14,8 @@ cross_specific_bridges(graph, starting_node = NULL,
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
 
-\item{starting_node}{An integer specifying the OSM id of the starting node. Defaults to the first vertex in \code{graph}.}
+\item{starting_node}{An integer specifying the OSM id of the starting node.
+Defaults to the first vertex in \code{graph}.}
 
 \item{...}{Additional variables passed to \code{\link[pathfinder:greedy_search]{greedy_search()}}}
 
@@ -26,7 +27,8 @@ that must be crossed.}
 A \code{konigsberg_path} object, which inherits from the \code{pathfinder_path} object from \code{\link[pathfinder:greedy_search]{greedy_search()}}
 }
 \description{
-Calculate a pathways crossing bridges in konigsberg_graphs
+These functions calculate pathways across bridges in \code{\link{konigsberg_graph}}
+objects.
 }
 \section{Functions}{
 \itemize{

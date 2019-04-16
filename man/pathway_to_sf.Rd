@@ -9,13 +9,13 @@ pathway_to_sf(graph, pathway)
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
 
-\item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link{cross_all_bridges}}}
+\item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link[=cross_all_bridges]{cross_all_bridges()}}}
 }
 \value{
 A list with two elements:
-- \code{pathway} An \code{\link[sf:sf]{sf::sf}} data frame with LINESTRING features
+- \code{pathway} An \code{\link[sf:sf]{sf}} data frame with LINESTRING features
 representing the pathway
-- \code{terminals} An \code{\link[sf:sf]{sf::sf}} data frame with two POINT features
+- \code{terminals} An \code{\link[sf:sf]{sf}} data frame with two POINT features
 representing the start and end nodes of the path.
 }
 \description{

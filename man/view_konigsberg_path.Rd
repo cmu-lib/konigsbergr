@@ -9,7 +9,7 @@ view_konigsberg_path(graph, pathway)
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
 
-\item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link{cross_all_bridges}}}
+\item{pathway}{A \code{konigsberg_pathway} resulting from \code{\link[=cross_all_bridges]{cross_all_bridges()}}}
 }
 \value{
 A \code{\link[leaflet:leaflet]{leaflet}} object

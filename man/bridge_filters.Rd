@@ -15,7 +15,8 @@ main_bridges(graph)
 \item{graph}{A \code{\link{konigsberg_graph}} object.}
 }
 \description{
-Preset filtering functions to define which Ways in the OSM data will be counted as bridges to be crossed
+Preset filtering functions to define which Ways in the OSM data will be
+counted as bridges to be crossed.
 }
 \section{Functions}{
 \itemize{

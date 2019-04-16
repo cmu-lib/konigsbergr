@@ -26,7 +26,8 @@ nodes_to_sf(graph, v_lat = igraph::vertex_attr(graph, "lat"),
 A named list with an \code{edges} and a \code{nodes} \code{\link[sf:sfc]{sfc}} object.
 }
 \description{
-Convert an igraph object with lon/lat attributes to an SF linestring collection
+This expects \code{graph} to have a \code{lat} and \code{lon} vertex attribute, however you
+may pass in alternate numeric vectors to \code{v_lat} and \code{v_lon}.
 }
 \section{Functions}{
 \itemize{
