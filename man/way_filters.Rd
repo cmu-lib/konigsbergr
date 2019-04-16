@@ -17,7 +17,9 @@ pedestrian_highways(graph)
 An integer vector of OSM Way ids.
 }
 \description{
-A variety of presets that will
+A variety of presets for filtering down a full OSM dataset to the ways that
+describe transportation. This primarily filters on the value of the
+\href{https://wiki.openstreetmap.org/wiki/Key:highway}{highway} tag's value.
 }
 \section{Functions}{
 \itemize{
@@ -26,3 +28,8 @@ A variety of presets that will
 \item \code{pedestrian_highways}: Ways that are navigable by foot
 }}
 
+\seealso{
+When using \code{\link[=get_osm_file]{get_osm_file()}}, note that the underlying
+\link[bigosm:read_big_osm]{read_big_osm()} function automatically subsets the
+network to Ways that contain a \code{highway} key.
+}

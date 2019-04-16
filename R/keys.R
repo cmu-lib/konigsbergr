@@ -4,7 +4,13 @@ osm_edge_tag_keys <- function() c("access", "highway", "bicycle", "foot", "bridg
 
 #' OSM Way filters
 #'
-#' A variety of presets that will
+#' A variety of presets for filtering down a full OSM dataset to the ways that
+#' describe transportation. This primarily filters on the value of the
+#' [`highway`](https://wiki.openstreetmap.org/wiki/Key:highway) tag's value.
+#'
+#' @seealso When using [get_osm_file()], note that the underlying
+#'   [read_big_osm()][bigosm::read_big_osm] function automatically subsets the
+#'   network to Ways that contain a `highway` key.
 #'
 #' @param graph A [`konigsberg_graph`] object.
 #'
