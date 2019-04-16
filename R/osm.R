@@ -37,7 +37,8 @@ get_osm_bbox <- function(xmin, xmax, ymin, ymax, server = "https://overpass-api.
   osm_res
 }
 
-#' @describeIn get_osm_bbox Read in OSM data from an XML file
+#' @describeIn get_osm_bbox Read in OSM data from an XML file. [get_osm_bbox()]
+#'   calls this function once it downloads the raw XML file.
 #' @param file Filepath for an OSM XML file
 #' @export
 get_osm_file <- function(file) {

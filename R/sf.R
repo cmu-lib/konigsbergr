@@ -1,5 +1,8 @@
 #' Convert an igraph object with lon/lat attributes to an SF linestring collection
 #'
+#' This expects `graph` to have a `lat` and `lon` vertex attribute, however you
+#' may pass in alternate numeric vectors to `v_lat` and `v_lon`.
+#'
 #' @param graph An [`igraph`][igraph::igraph] object
 #' @param v_lat Numeric. Latitude values for each vertex
 #' @param v_lon Numeric. Longitude values for each vertex
@@ -56,12 +59,12 @@ nodes_to_sf <- function(graph, v_lat = igraph::vertex_attr(graph, "lat"), v_lon 
 #' taken over the map.
 #'
 #' @param graph A [`konigsberg_graph`]
-#' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges`]
+#' @param pathway A `konigsberg_pathway` resulting from [`cross_all_bridges()`]
 #'
 #' @return A list with two elements:
-#'     - `pathway` An [`sf::sf`] data frame with LINESTRING features
+#'     - `pathway` An [`sf`][sf::sf] data frame with LINESTRING features
 #'     representing the pathway
-#'     - `terminals` An [`sf::sf`] data frame with two POINT features
+#'     - `terminals` An [`sf`][sf::sf] data frame with two POINT features
 #'     representing the start and end nodes of the path.
 #'
 #' @importFrom dplyr group_by mutate ungroup bind_cols case_when

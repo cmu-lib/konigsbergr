@@ -1,7 +1,11 @@
-#' Calculate a pathways crossing bridges in konigsberg_graphs
+#' Calculate pathways across bridges
+#'
+#' These functions calculate pathways across bridges in [`konigsberg_graph`]
+#' objects.
 #'
 #' @param graph A [`konigsberg_graph`]
-#' @param starting_node An integer specifying the OSM id of the starting node. Defaults to the first vertex in `graph`.
+#' @param starting_node An integer specifying the OSM id of the starting node.
+#'   Defaults to the first vertex in `graph`.
 #' @param ... Additional variables passed to [`greedy_search()`][pathfinder::greedy_search]
 #'
 #' @return A `konigsberg_path` object, which inherits from the `pathfinder_path` object from [`greedy_search()`][pathfinder::greedy_search]
