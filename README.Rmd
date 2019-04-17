@@ -47,4 +47,3 @@ This package is one of several originally developed by [Matthew Lincoln](https::
 [pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
 
 [bigosm]: https://github.com/dSHARP-CMU/bigosm
-

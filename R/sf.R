@@ -85,7 +85,7 @@ pathway_to_sf <- function(graph, pathway) {
       )
     )
 
-  augmented_pathway <- pathfinder::augment(pathway) %>%
+  augmented_pathway <- pathfinder::augment_path(pathway) %>%
     group_by(.data$bundle_id) %>%
     mutate(total_times_bridge_crossed = max(.data$times_bundle_crossed)) %>%
     ungroup()
