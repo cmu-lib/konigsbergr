@@ -1,6 +1,8 @@
 ---
 title: "Mapping and Analyzing Konigsbergr Graphs"
 output: rmarkdown::html_vignette
+author: "Matthew Lincoln"
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Mapping and Analyzing Konigsbergr Graphs}
   %\VignetteEngine{knitr::rmarkdown}
