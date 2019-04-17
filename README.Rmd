@@ -25,7 +25,8 @@ The goal of konigsbergr is to recreate the ["Bridges of Königsberg"](https://en
 You can install the development version:
 
 ```{r install, eval = FALSE}
-devtools::install_github("dSHARP-CMU/konigsbergr")
+# install.packages("remotes")
+remotes::install_github("dSHARP-CMU/konigsbergr")
 ```
 
 ## Usage

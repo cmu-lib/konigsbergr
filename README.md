@@ -20,7 +20,8 @@ and traversing it.
 You can install the development version:
 
 ``` r
-devtools::install_github("dSHARP-CMU/konigsbergr")
+# install.packages("remotes")
+remotes::install_github("dSHARP-CMU/konigsbergr")
 ```
 
 ## Usage
