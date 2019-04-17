@@ -40,6 +40,6 @@ plot(simple_boston_sf$edges["geometry"])
 }
 \seealso{
 This function relies on the
-\link[simplygraph:simplify_topology]{simplify_topology()} function from the
-simplygraph package.
+\link[pathfinder:simplify_topology]{simplify_topology()} function from the
+pathfinder package.
 }

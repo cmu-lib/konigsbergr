@@ -44,4 +44,3 @@ project:
     (end-user package)
       - [pathfinder](https://github.com/dSHARP-CMU/pathfinder/)
       - [bigosm](https://github.com/dSHARP-CMU/bigosm)
-      - [simplygraph](https://github.com/dSHARP-CMU/simplygraph)

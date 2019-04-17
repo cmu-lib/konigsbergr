@@ -11,8 +11,8 @@
 #' attribute of the new graph.
 #'
 #' @seealso This function relies on the
-#'   [simplify_topology()][simplygraph::simplify_topology] function from the
-#'   simplygraph package.
+#'   [simplify_topology()][pathfinder::simplify_topology] function from the
+#'   pathfinder package.
 #'
 #' @param graph A Konigsbergr graph created from [konigsberg_graph()].
 #' @param preserve_bridges Boolean. Preserve full bridge geometry?
@@ -43,9 +43,9 @@ simplify_konigsbergr <- function(graph, preserve_bridges = TRUE) {
   }
 
   # Sum road distances when merging edges;
-  simplygraph::simplify_topology(
+  pathfinder::simplify_topology(
     ud_graph,
     edge_attr_comb = list(distance = sum,
-                          .default.combiner = simplygraph::first),
+                          .default.combiner = pathfinder::first),
     protected_nodes = bridge_nodes)
 }
