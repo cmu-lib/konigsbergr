@@ -53,7 +53,7 @@ pedestrian_highways <- function(graph) {
   graph %>%
     tidygraph::activate(edges) %>%
     dplyr::filter(
-      (.data$highway %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")),
+      (.data$highway %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link", "steps")),
       (is.na(.data$foot) | .data$foot != "no")
     ) %>%
     select_main_component()
