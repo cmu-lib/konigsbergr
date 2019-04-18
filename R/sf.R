@@ -132,3 +132,18 @@ view_konigsberg_path <- function(graph, pathway) {
 
   lf
 }
+
+#' Plot a static visual of the Konigsberg pathway
+#'
+#' @inheritParams view_konigsberg_path
+#'
+#' @return An `sf` plot
+#' @export
+plot_konigsberg_path <- function(graph, pathway) {
+  graph_sf <- graph_to_sf(graph)
+  path_sf <- pathway_to_sf(graph, pathway)
+
+  plot(graph_sf$edges["geometry"], col = "gray30", reset = FALSE)
+  plot(path_sf$pathway["total_times_bridge_crossed"], alpha = 0.5, lwd = 3, add = TRUE)
+  plot(path_sf$terminals["geometry"], col = "blue", pch = 16, cex = 3, add = TRUE)
+c}
