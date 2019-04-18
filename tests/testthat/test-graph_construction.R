@@ -69,7 +69,7 @@ test_that("filter ways", {
 
   edge_table <- as_tibble(filtered_graph, "edges")
   expect_false(any(edge_table[["foot"]] == "no", na.rm = TRUE))
-  expect_true(all(edge_table[["highway"]] %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link")))
+  expect_true(all(edge_table[["highway"]] %in% c("footway", "pedestrian", "path", "primary", "secondary", "tertiary", "primary_link", "steps")))
 })
 
 test_that("mark bridges", {
