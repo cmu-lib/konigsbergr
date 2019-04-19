@@ -20,11 +20,9 @@ cross_all_bridges <- function(graph, starting_node = NULL, ...) {
   bridge_bundles <- collect_edge_bundles(graph)
   starting_point <- calculate_starting_node(graph, starting_node)
 
-  res <- pathfinder::greedy_search(graph,
-                edge_bundles = bridge_bundles,
-                distances = E(graph)$distance,
-                starting_point = starting_point,
-                ...)
+  decorated_graph <- pathfinder::decorate_graph(graph, bridge_bundles, E(graph)$distance)
+
+  res <- pathfinder::matrix_search(decorated_graph, starting_point = starting_point, ...)
   class(res) <- c(class(res), "konigsberg_path")
   res
 }

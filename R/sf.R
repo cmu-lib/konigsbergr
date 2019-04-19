@@ -93,8 +93,8 @@ pathway_to_sf <- function(graph, pathway) {
   pathway_sf <- bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
 
   # Get start and end point and add to map
-  start_point <- head(head(pathway$vpath, 1)[[1]], 1)
-  end_point <- tail(tail(pathway$vpath, 1)[[1]], 1)
+  start_point <- pathway$starting_point
+  end_point <- pathway$ending_point
 
   nodes_sf <- nodes_to_sf(graph)[c(start_point, end_point),]
   nodes_sf$start <- c("Beginning", "End")
