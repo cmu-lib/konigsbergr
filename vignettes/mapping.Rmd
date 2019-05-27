@@ -52,7 +52,7 @@ plot(boston_sf$edges["highway"])
 Computed konigsbergr pathways can similarly be converted into `sfc` objects using the `pathway_to_sf()` function.
 
 ```{r plot-path}
-boston_path <- cross_all_bridges(boston_konigsbergr, starting_node = 2688967592, quiet = TRUE)
+boston_path <- cross_all_bridges(boston_konigsbergr, starting_node = 2688967592)
 
 path_sf <- pathway_to_sf(boston_konigsbergr, boston_path)
 

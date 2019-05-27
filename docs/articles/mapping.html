@@ -83,7 +83,7 @@
       <h1>Mapping and Analyzing Konigsbergr Graphs</h1>
                         <h4 class="author">Matthew Lincoln</h4>
             
-            <h4 class="date">2019-04-17</h4>
+            <h4 class="date">2019-05-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dSHARP-CMU/konigsbergr/blob/master/vignettes/mapping.Rmd"><code>vignettes/mapping.Rmd</code></a></small>
       <div class="hidden name"><code>mapping.Rmd</code></div>
@@ -115,11 +115,16 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(boston_sf<span class="op">$</span>edges[<span class="st">"highway"</span>])</a></code></pre></div>
 <p><img src="mapping_files/figure-html/plot-variables-1.png" width="700"></p>
 <p>Computed konigsbergr pathways can similarly be converted into <code>sfc</code> objects using the <code><a href="../reference/pathway_to_sf.html">pathway_to_sf()</a></code> function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">boston_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/traverse_graph.html">cross_all_bridges</a></span>(boston_konigsbergr, <span class="dt">starting_node =</span> <span class="dv">2688967592</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2"></a>
-<a class="sourceLine" id="cb5-3" title="3">path_sf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pathway_to_sf.html">pathway_to_sf</a></span>(boston_konigsbergr, boston_path)</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(path_sf<span class="op">$</span>pathway[<span class="st">"geometry"</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">boston_path &lt;-<span class="st"> </span><span class="kw"><a href="../reference/traverse_graph.html">cross_all_bridges</a></span>(boston_konigsbergr, <span class="dt">starting_node =</span> <span class="dv">2688967592</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; Pre-calculating distance matrices...full matrix...inter-bundle matrix...intra-bundle matrix...done.</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; Running greedy search...done.</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; Extrapolating full paths...</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; done.</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; Completed a path with 15 steps crossing 248 edges and 9 bundles.</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">path_sf &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pathway_to_sf.html">pathway_to_sf</a></span>(boston_konigsbergr, boston_path)</a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(path_sf<span class="op">$</span>pathway[<span class="st">"geometry"</span>])</a></code></pre></div>
 <p><img src="mapping_files/figure-html/plot-path-1.png" width="700"></p>
 </div>
 <div id="network-analysis-with-konigsbergr-graphs" class="section level2">
