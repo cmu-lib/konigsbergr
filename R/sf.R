@@ -93,15 +93,15 @@ pathway_to_sf <- function(graph, pathway) {
   pathway_sf <- bind_cols(edges_sf[augmented_pathway$edge_id,], augmented_pathway)
 
   # Get start and end point and add to map
-  start_point <- pathway$starting_point
-  end_point <- pathway$ending_point
+  start_point <- pathway[["starting_point"]]
+  end_point <- pathway[["ending_point"]]
 
-  nodes_sf <- nodes_to_sf(graph)[c(start_point, end_point),]
-  nodes_sf$start <- c("Beginning", "End")
+  endpoints_sf <- nodes_to_sf(graph)[c(start_point, end_point),]
+  endpoints_sf$start <- c("Beginning", "End")
 
   structure(list(
     pathway = pathway_sf,
-    terminals = nodes_sf),
+    terminals = endpoints_sf),
     class = c("list", "konigsberg_sf"))
 }
 
@@ -119,7 +119,7 @@ pathway_to_sf <- function(graph, pathway) {
 view_konigsberg_path <- function(graph, pathway) {
   path_sf <- pathway_to_sf(graph, pathway)
 
-  cross_pal <- colorFactor(c("#2B83BA", "#ABDDA4", "#FDAE61"),
+  cross_pal <- colorFactor(c("#2B83BA", "#ABDDA4", "#FDAE61", "red"),
                            path_sf$pathway$total_times_bridge_crossed)
 
   lf <- leaflet(path_sf$pathway, width = "100%", height = "600px") %>%
