@@ -136,7 +136,7 @@ view_konigsberg_path <- function(graph, pathway) {
 #' Plot a static visual of the Konigsberg pathway
 #'
 #' @inheritParams view_konigsberg_path
-#'
+#' @importFrom graphics plot
 #' @return An `sf` plot
 #' @export
 plot_konigsberg_path <- function(graph, pathway) {
