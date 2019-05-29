@@ -76,7 +76,8 @@ boston_path <- cross_all_bridges(boston_graph)
 view_konigsberg_path(boston_graph, boston_path)
 ```
 
-The `greedy_search()` function implemented by [pathfinder] is not particularly creative, so depending on how you have defined the limits of your map data you may find that the path needs to cross back over a bridge, or gets trapped (e.g. behind a one-way street) and cannot complete the entire circuit.
+Although relatively fast, the `greedy_search()` function implemented by [pathfinder] is not particularly creative. 
+Depending on how you have defined the limits of your map data, you may find that the path needs to cross back over a bridge, or gets trapped (e.g. behind a one-way street) and cannot complete the entire circuit.
 Try specifying alternate start points for the pathway to see if you can find a more efficient route:
 
 ```{r}
