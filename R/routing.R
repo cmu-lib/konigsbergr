@@ -19,7 +19,7 @@ cross_all_bridges <- function(graph, starting_node = NULL, ...) {
   stopifnot(inherits(graph, "konigsberg_graph"))
   bridge_bundles <- collect_edge_bundles(graph)
   starting_point <- calculate_starting_node(graph, starting_node)
-  res <- pathfinder::greedy_search(graph, bridge_bundles, E(graph)$distance, starting_point = starting_point, cheat = TRUE, quiet = FALSE, ...)
+  res <- pathfinder::greedy_search(graph, bridge_bundles, E(graph)$distance, starting_point = starting_point, ...)
   class(res) <- c(class(res), "konigsberg_path")
   res
 }
