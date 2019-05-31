@@ -119,7 +119,7 @@ pathway_to_sf <- function(graph, pathway) {
 view_konigsberg_path <- function(graph, pathway) {
   path_sf <- pathway_to_sf(graph, pathway)
 
-  cross_pal <- colorFactor(c("#2B83BA", "#ABDDA4", "#FDAE61", "red"),
+  cross_pal <- colorFactor(c('#7fc97f','#beaed4','#fdc086','#ffff99','#386cb0','#f0027f','#bf5b17','#666666'),
                            path_sf$pathway$total_times_bridge_crossed)
 
   lf <- leaflet(path_sf$pathway, width = "100%", height = "600px") %>%
