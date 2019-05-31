@@ -6,16 +6,21 @@
 \alias{cross_specific_bridges}
 \title{Calculate pathways across bridges}
 \usage{
-cross_all_bridges(graph, starting_node = NULL, ...)
+cross_all_bridges(graph, starting_node = NULL, cheat = TRUE,
+  quiet = FALSE, ...)
 
 cross_specific_bridges(graph, starting_node = NULL,
-  required_bridges = NULL, ...)
+  required_bridges = NULL, cheat = TRUE, quiet = FALSE, ...)
 }
 \arguments{
 \item{graph}{A \code{\link{konigsberg_graph}}}
 
 \item{starting_node}{An integer specifying the OSM id of the starting node.
 Defaults to the first vertex in \code{graph}.}
+
+\item{cheat}{Boolean. Allow pathway to re-cross bridges?}
+
+\item{quiet}{Boolean. Suppress progress messages?}
 
 \item{...}{Additional variables passed to \code{\link[pathfinder:greedy_search]{greedy_search()}}}
 
