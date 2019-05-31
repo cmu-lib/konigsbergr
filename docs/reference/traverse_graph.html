@@ -127,10 +127,11 @@ objects.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cross_all_bridges</span>(<span class='no'>graph</span>, <span class='kw'>starting_node</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>cross_all_bridges</span>(<span class='no'>graph</span>, <span class='kw'>starting_node</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cheat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>cross_specific_bridges</span>(<span class='no'>graph</span>, <span class='kw'>starting_node</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>required_bridges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>required_bridges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cheat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,6 +144,14 @@ objects.</p>
       <th>starting_node</th>
       <td><p>An integer specifying the OSM id of the starting node.
 Defaults to the first vertex in <code>graph</code>.</p></td>
+    </tr>
+    <tr>
+      <th>cheat</th>
+      <td><p>Boolean. Allow pathway to re-cross bridges?</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Boolean. Suppress progress messages?</p></td>
     </tr>
     <tr>
       <th>...</th>
