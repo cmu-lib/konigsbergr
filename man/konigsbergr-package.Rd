@@ -13,8 +13,8 @@ A playful attempt to recreate Euler's "Bridges of
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/dSHARP-CMU/konigsbergr}
-  \item Report bugs at \url{https://github.com/dSHARP-CMU/konigsbergr/issues}
+  \item \url{https://github.com/cmu-lib/konigsbergr}
+  \item Report bugs at \url{https://github.com/cmu-lib/konigsbergr/issues}
 }
 
 }

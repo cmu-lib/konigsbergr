@@ -19,7 +19,7 @@ library(konigsbergr)
 library(osmar)
 ```
 
-In 1736, mathematician Leonard Euler proved it was impossible to walk through the German city of Königsberg crossing each of the city’s seven bridges exactly once. His work, famously dubbed the “Bridges of Königsberg” problem, laid the foundation for graph theory and network analysis, and foreshadowed the invention of topology. 
+In 1736, mathematician Leonard Euler proved it was impossible to walk through the German city of Königsberg crossing each of the city’s seven bridges exactly once. His work, famously dubbed the “Bridges of Königsberg” problem, laid the foundation for graph theory and network analysis, and foreshadowed the invention of topology.
 
 `kongisbergr` is a playful experiment that allows you to find pathways across the bridges in your own city or town, relying on the data from [OpenStreetMap][osm].
 
@@ -76,7 +76,7 @@ boston_path <- cross_all_bridges(boston_graph)
 view_konigsberg_path(boston_graph, boston_path)
 ```
 
-Although relatively fast, the `greedy_search()` function implemented by [pathfinder] is not particularly creative. 
+Although relatively fast, the `greedy_search()` function implemented by [pathfinder] is not particularly creative.
 Depending on how you have defined the limits of your map data, you may find that the path needs to cross back over a bridge, or gets trapped (e.g. behind a one-way street) and cannot complete the entire circuit.
 Try specifying alternate start points for the pathway to see if you can find a more efficient route:
 
@@ -93,7 +93,7 @@ The [bigosm] package can read in much larger exports (e.g. New York City is abou
 konigsbergr will automatically use this package if you call `get_osm_bbox()`.
 Even with this filtering, though, be aware that trying to do a graph construction and traversal for a large city can still take tens of minutes for graphs of NYC-scale.
 
-[bigosm]: https://github.com/dSHARP-CMU/bigosm
+[bigosm]: https://github.com/cmu-lib/bigosm
 
 In addition to filtering and marking bridges for crossing, `konigsberg_graph()` also wraps the core function that converts OSM data into a graph object. This is an expensive operation when your data are very large, and so Konigsbergr also exposes the underlying function `create_base_konigsberg_graph()`. This will perform the initial conversion before applying the `path_filter()` and `bridge_filter()` functions, and you may wish to save that intermediate object so that it is easier to experiment with different filter combinations later on.
 
@@ -112,4 +112,4 @@ When trying to run this over a large geographic extent, I recommend using an orc
 
 [drake]: https://cran.r-project.org/package=drake
 
-[pathfinder]: https://github.com/dSHARP-CMU/pathfinder/
+[pathfinder]: https://github.com/cmu-lib/pathfinder/
